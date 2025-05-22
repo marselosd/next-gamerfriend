@@ -1,0 +1,25 @@
+{
+  "navbar": {
+    "title": "Next-GamerFriend",
+    "games": "Games",
+    "lists": "Lists",
+    "reviews": "Reviews",
+    "login": "Login",
+    "createAccount": "Create Account",
+    "search": "Search games..."
+  },
+  "header": {
+    "title": "Next-GamerFriend",
+    "subtitle": "Track your gaming journey"
+  },
+  "auth": {
+    "createAccount": "Create Account"
+  },
+  "hero": {
+    "title": "Your gaming companion",
+    "subtitle": "Track, rate and discover new games with Next-GamerFriend"
+  },
+  "footer": {
+    "text": "© 2023 Next-GamerFriend. All rights reserved."
+  }
+}

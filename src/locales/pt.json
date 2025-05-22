@@ -1,0 +1,25 @@
+{
+  "navbar": {
+    "title": "Next-GamerFriend",
+    "games": "Jogos",
+    "lists": "Listas",
+    "reviews": "Avaliações",
+    "login": "Entrar",
+    "createAccount": "Criar Conta",
+    "search": "Pesquisar jogos..."
+  },
+  "header": {
+    "title": "Next-GamerFriend",
+    "subtitle": "Acompanhe sua jornada de jogos"
+  },
+  "auth": {
+    "createAccount": "Criar Conta"
+  },
+  "hero": {
+    "title": "Seu companheiro de jogos",
+    "subtitle": "Acompanhe, avalie e descubra novos jogos com o Next-GamerFriend"
+  },
+  "footer": {
+    "text": "© 2023 Next-GamerFriend. Todos os direitos reservados."
+  }
+}
