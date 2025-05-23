@@ -21,14 +21,19 @@
       },
       "hero_card": {
         "cardName": "Bienvenido",
-        "cardTittle1": "Acerca de",
-        "cardTittle2": "Califica",
-        "cardTittle3": "Muestra",
+        "cardTitle1": "Acerca de",
+        "cardTitle2": "Califica",
+        "cardTitle3": "Muestra",
         "cardChildren1": "Un sitio para organizar tus opiniones sobre juegos",
         "cardChildren2": "Califica tus juegos favoritos o más odiados",
         "cardChildren3": "¡Muestra al mundo tus juegos favoritos!"
       },
       "footer": {
         "text": "© 2025 Next-GamerFriend. Todos los derechos reservados."
+      },
+      "cardGames": {
+        "title": "Juegos",
+        "desc": "Soulslike lanzado en 2014",
+        "desc2": "JRPG lanzado en 2006"
       }
   }

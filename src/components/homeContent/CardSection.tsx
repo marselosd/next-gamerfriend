@@ -14,17 +14,17 @@ export default function CardSection() {
     <div className="flex flex-col md:flex-row justify-center items-stretch gap-3 px-3 py-5">
         <CommonCard
             cardName={hero_card.cardName}
-            tittle={hero_card.cardTittle1}
+            tittle={hero_card.cardTitle1}
             children={hero_card.cardChildren1}
         />
         <CommonCard
             cardName={hero_card.cardName}
-            tittle={hero_card.cardTittle2}
+            tittle={hero_card.cardTitle2}
             children={hero_card.cardChildren2}
         />
         <CommonCard
             cardName={hero_card.cardName}
-            tittle={hero_card.cardTittle3}
+            tittle={hero_card.cardTitle3}
             children={hero_card.cardChildren3}
         />
     </div>

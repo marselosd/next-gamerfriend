@@ -1,7 +1,8 @@
+import React from "react";
 import { CommonCardProp } from "@/types/interfaces/interfaces";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
-export default function CommonCard({ cardName, tittle, children}: CommonCardProp) {
+export default function CommonCard({ cardName, tittle, children, img}: CommonCardProp) {
   return (
     <>
     <Card sx={{ backgroundColor: '#6667AB', color: 'white' }} className="shadow-lg rounded-2xl">
@@ -9,6 +10,27 @@ export default function CommonCard({ cardName, tittle, children}: CommonCardProp
             <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
                 {cardName}
             </Typography>
+
+            {img ? 
+            (
+            <CardMedia
+                component="img"
+                image={img.image}
+                alt={img.alt}
+                sx={{
+                    width: '200px',
+                    height: '175px',    
+                    objectFit: 'cover',   
+                    borderRadius: 2,     
+                }}
+            />
+            ) :
+            (
+                <>
+                </>
+            )}
+            <br/>
+            <hr/>
 
             <Typography variant="h5" component="div">
                 {tittle}
