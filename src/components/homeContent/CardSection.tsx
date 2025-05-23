@@ -15,18 +15,23 @@ export default function CardSection() {
         <CommonCard
             cardName={hero_card.cardName}
             tittle={hero_card.cardTitle1}
-            children={hero_card.cardChildren1}
-        />
+        >
+        {hero_card.cardChildren1}
+        </CommonCard>
+
         <CommonCard
             cardName={hero_card.cardName}
             tittle={hero_card.cardTitle2}
-            children={hero_card.cardChildren2}
-        />
+        >
+        {hero_card.cardChildren2}
+        </CommonCard>
+
         <CommonCard
             cardName={hero_card.cardName}
             tittle={hero_card.cardTitle3}
-            children={hero_card.cardChildren3}
-        />
+        >
+        {hero_card.cardChildren3}
+        </CommonCard>
     </div>
     </>
   )

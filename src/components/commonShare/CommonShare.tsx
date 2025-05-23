@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useEffect, useState } from 'react';
+import { useAppDispatch } from "@/redux/hooks";
+import { useEffect } from 'react';
 import { setUrl } from './ShareSlice';
 
 interface CommonShareProps {

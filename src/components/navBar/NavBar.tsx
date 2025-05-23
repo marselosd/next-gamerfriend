@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { setLanguage } from '@/redux/slices/languageSlice'
-import { getTranslations, availableLanguages, Language } from '@/locales'
+import { getTranslations, Language } from '@/locales'
 import Link from 'next/link'
 
 interface NavbarProps {
@@ -12,14 +12,9 @@ interface NavbarProps {
 }
 
 export default function Navbar({isMobile}: NavbarProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
   const dispatch = useDispatch()
   const { navbar } = getTranslations(currentLanguage)
-
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setLanguage(e.target.value as Language))
-  }
 
   const baseClasses = isMobile
     ? 'flex flex-col space-y-2'
