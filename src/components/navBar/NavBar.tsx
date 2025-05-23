@@ -1,5 +1,5 @@
 'use client'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { getTranslations } from '@/locales'
 import Link from 'next/link'
@@ -10,7 +10,6 @@ interface NavbarProps {
 
 export default function Navbar({isMobile}: NavbarProps) {
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
-  const dispatch = useDispatch()
   const { navbar } = getTranslations(currentLanguage)
 
   const baseClasses = isMobile
