@@ -1,10 +1,7 @@
 'use client'
-
-import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { setLanguage } from '@/redux/slices/languageSlice'
-import { getTranslations, Language } from '@/locales'
+import { getTranslations } from '@/locales'
 import Link from 'next/link'
 
 interface NavbarProps {
