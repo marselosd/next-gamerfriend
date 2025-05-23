@@ -1,15 +1,15 @@
-import Navbar from '@/components/NavBar'
-import HeroSection from '@/components/HeroSection'
-import Footer from '@/components/Footer'
+import HeroSection from '@/components/homeContent/HeroSection'
+import CardSection from '@/components/homeContent/CardSection'
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-grow">
-        <HeroSection />
-      </main>
-      <Footer />
-    </div>
+    <>
+    <section className="flex flex-col">
+      <HeroSection/>
+    </section>
+    <section>
+      <CardSection/>
+    </section>
+    </>
   )
 }

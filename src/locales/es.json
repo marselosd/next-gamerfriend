@@ -19,7 +19,16 @@
         "title": "Tu compañero de juegos",
         "subtitle": "Sigue, califica y descubre nuevos juegos con Next-GamerFriend"
       },
+      "hero_card": {
+        "cardName": "Bienvenido",
+        "cardTittle1": "Acerca de",
+        "cardTittle2": "Califica",
+        "cardTittle3": "Muestra",
+        "cardChildren1": "Un sitio para organizar tus opiniones sobre juegos",
+        "cardChildren2": "Califica tus juegos favoritos o más odiados",
+        "cardChildren3": "¡Muestra al mundo tus juegos favoritos!"
+      },
       "footer": {
-        "text": "© 2023 Next-GamerFriend. Todos los derechos reservados."
+        "text": "© 2025 Next-GamerFriend. Todos los derechos reservados."
       }
   }

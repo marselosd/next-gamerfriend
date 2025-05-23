@@ -19,7 +19,16 @@
     "title": "Your gaming companion",
     "subtitle": "Track, rate and discover new games with Next-GamerFriend"
   },
+  "hero_card": {
+    "cardName": "Welcome",
+    "cardTittle1": "About",
+    "cardTittle2": "Rate",
+    "cardTittle3": "Showcase",
+    "cardChildren1": "A site to organize your thoughts on games",
+    "cardChildren2": "Rate your favorite or most hated games",
+    "cardChildren3": "Show the world your favorite games!"
+  },
   "footer": {
-    "text": "© 2023 Next-GamerFriend. All rights reserved."
+    "text": "© 2025 Next-GamerFriend. All rights reserved."
   }
 }
