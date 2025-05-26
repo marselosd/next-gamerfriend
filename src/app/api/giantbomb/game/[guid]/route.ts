@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "GUID do jogo é obrigatório" }, { status: 400 });
   }
 
-  const API_KEY = process.env.NEXT_PUBLIC_GIANT_BOMB_KEY;
+  const API_KEY = process.env.GIANT_BOMB_KEY;
   if (!API_KEY) {
     return NextResponse.json({ error: "Chave da API não configurada" }, { status: 500 });
   }
