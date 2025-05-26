@@ -33,6 +33,6 @@ export async function GET(
 
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json({ error: `Erro interno ao buscar jogo ${error}` }, { status: 500 });
+    return NextResponse.json(`Error: ${error}`);
   }
 }
