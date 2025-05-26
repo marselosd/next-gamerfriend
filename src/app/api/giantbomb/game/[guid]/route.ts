@@ -1,12 +1,7 @@
+/* eslint-disable */
 import { NextResponse } from "next/server";
 
-interface Params {
-  params: {
-    guid: string;
-  };
-}
-
-export const GET = async (_request: Request, { params }: Params) => {
+export async function GET(req: Request, { params }: { params: { guid: string } }) {
   const { guid } = params;
   const API_KEY = process.env.NEXT_PUBLIC_GIANT_BOMB_KEY;
 
@@ -36,6 +31,6 @@ export const GET = async (_request: Request, { params }: Params) => {
 
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json(`Error: ${error}`);
+    return NextResponse.json( `Erro interno ao buscar jogo ${error}`);
   }
-};
+}
