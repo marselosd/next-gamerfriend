@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { guid: string } }
-) {
+interface Params {
+  params: {
+    guid: string;
+  };
+}
+
+export const GET = async (_request: Request, { params }: Params) => {
   const { guid } = params;
   const API_KEY = process.env.NEXT_PUBLIC_GIANT_BOMB_KEY;
 
@@ -35,4 +38,4 @@ export async function GET(
   } catch (error) {
     return NextResponse.json(`Error: ${error}`);
   }
-}
+};
