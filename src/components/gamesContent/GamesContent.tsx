@@ -5,6 +5,7 @@ import { getTranslations } from "@/locales";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useGetGamesQuery } from "./gamesApi";
+import { GameResult } from "@/types/interfaces/interfaces";
 
 export default function GamesContent() {
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage);
@@ -58,7 +59,7 @@ export default function GamesContent() {
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading && <p>Carregando jogos...</p>}
         {error && <p className="text-red-500">Erro ao carregar jogos</p>}
-        {!isLoading && !error && data?.results?.map((game: any) => (
+        {!isLoading && !error && data?.results?.map((game: GameResult) => (
           <CardShareFav
             key={game.id}
             id={String(game.id)}
@@ -69,7 +70,6 @@ export default function GamesContent() {
               alt: game.name,
             }}
           >
-            {game.deck || game.description || "Sem descrição disponível."}
           </CardShareFav>
         ))}
       </section>

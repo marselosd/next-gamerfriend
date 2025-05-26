@@ -53,7 +53,7 @@ export default function CommonCard({ cardName, tittle, children, img }: CommonCa
                         mt: 1,
                         overflowY: 'auto',
                         maxHeight: 120,
-                        pr: 1, // espaço pro scrollbar não sobrepor o texto
+                        pr: 1,
                     }}
                 >
                     <Typography variant="body2">

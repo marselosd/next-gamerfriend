@@ -27,9 +27,7 @@ export default function Header() {
     <nav className="bg-[#6667AB] text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          {/* Logo and main nav (left side) */}
           <div className="flex items-center">
-            {/* Mobile menu button */}
             <div className="flex-shrink-0 flex items-center md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -37,7 +35,6 @@ export default function Header() {
                 aria-expanded={isMenuOpen}
               >
                 <span className="sr-only">Open main menu</span>
-                {/* Ícone do menu hamburguer */}
                 <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -46,7 +43,6 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="text-xl font-bold">
                 {navbar.title}
@@ -56,19 +52,15 @@ export default function Header() {
             
           </div>
 
-          {/* Right side items */}
           <div className="flex items-center">
-            {/* Search icon - desktop */}
             <div className="hidden md:flex items-center mr-4">
               <button 
                 className="p-1 rounded-full hover:bg-[#4A4B83]"
                 aria-label={navbar.search}
               >
-                {/* Ícone de busca... */}
               </button>
             </div>
 
-            {/* Language selector - desktop */}
             <div className="hidden md:flex items-center mr-4">
               <select
                 value={currentLanguage}
@@ -111,12 +103,10 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-[#6667AB] px-4 pb-4">
           <Navbar isMobile />
           
-          {/* Auth buttons - mobile */}
           <div className="flex flex-col space-y-2 mt-4">
             <Link
               href="/login"
@@ -132,7 +122,6 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Language selector - mobile */}
           <div className="mt-4">
             <select
               value={currentLanguage}
@@ -148,7 +137,7 @@ export default function Header() {
             </select>
           </div>
         </div>
-)}
+    )}
     </nav>
   )
 }

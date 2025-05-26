@@ -4,12 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { fetchFavorites } from "@/redux/thunk/favoritesThunk";
 import CardShare from "../commonCard/CardShare";
+import { GameData } from "@/types/interfaces/interfaces";
 
 export default function ProfileContent() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const favorites = useAppSelector(state => state.auth.items);
-  const [favoritesData, setFavoritesData] = useState<any[]>([]);
+  const [favoritesData, setFavoritesData] = useState<GameData[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

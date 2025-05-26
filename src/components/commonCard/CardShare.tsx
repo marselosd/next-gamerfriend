@@ -5,7 +5,7 @@ import CommonCard from "./CommonCard";
 import { useAppDispatch } from "@/redux/hooks";
 import { setWindowWidth } from "./WindowSlice";
 
-export default function CardShare({ cardName, tittle, children, img, id}: CardProp) {
+export default function CardShare({ cardName, tittle, children, img }: CardProp) {
     const dispatch = useAppDispatch();
     const [imageUrl, setImageUrl] = useState("");
 

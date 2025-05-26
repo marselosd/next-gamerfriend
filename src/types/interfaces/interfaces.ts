@@ -19,3 +19,27 @@ export interface User {
   email: string | null;
   photo: string | null;
 }
+
+export interface GameData {
+  guid: string;
+  name: string;
+  image?: {
+    small_url?: string;
+  };
+  deck?: string;
+  description?: string;
+}
+
+export interface GameResult {
+  id: number | string;
+  name: string;
+  image?: {
+    small_url?: string;
+  };
+  deck?: string;
+  description?: string;
+}
+
+export interface GamesApiResponse {
+  results: GameResult[];
+}

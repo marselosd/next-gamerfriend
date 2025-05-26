@@ -1,3 +1,4 @@
+import { GamesApiResponse } from "@/types/interfaces/interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const giantBombApi = createApi({
@@ -6,7 +7,7 @@ export const giantBombApi = createApi({
     baseUrl: '/api/', 
   }),
   endpoints: (builder) => ({
-    getGames: builder.query<any, { page?: number; sort?: string; search?: string}>({
+    getGames: builder.query<GamesApiResponse, { page?: number; sort?: string; search?: string}>({
       query: ({ page = 1 , sort='', search=''}) => {
         const params = new URLSearchParams();
         params.set('page', String(page));
