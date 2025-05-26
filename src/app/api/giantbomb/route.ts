@@ -7,7 +7,7 @@ export async function GET(req: Request) {
   const sort = searchParams.get("sort") || "";
   const search = searchParams.get("search") || "";
 
-  const API_KEY = process.env.GIANT_BOMB_KEY;
+  const API_KEY = process.env.NEXT_PUBLIC_GIANT_BOMB_KEY;
 
   const offset = (page - 1) * 20;
    const url = `https://www.giantbomb.com/api/games/?api_key=${API_KEY}&format=json&offset=${offset}&limit=20&field_list=id,name,image${
