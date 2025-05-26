@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { guid: string } }) {
+export async function GET(
+  _request: Request,
+  { params }: { params: { guid: string } }
+) {
   const { guid } = params;
   const API_KEY = process.env.NEXT_PUBLIC_GIANT_BOMB_KEY;
 
@@ -30,6 +33,6 @@ export async function GET(req: Request, { params }: { params: { guid: string } }
 
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json( `Erro interno ao buscar jogo ${error}`);
+    return NextResponse.json({ error: `Erro interno ao buscar jogo ${error}` }, { status: 500 });
   }
 }
