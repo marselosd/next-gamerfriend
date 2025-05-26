@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-let db: Record<string, string[]> = {};
+const db: Record<string, string[]> = {};
 
 export async function POST(req: NextRequest) {
   const { userId, itemId } = await req.json();

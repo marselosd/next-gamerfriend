@@ -30,6 +30,6 @@ export async function GET(req: Request, { params }: { params: { guid: string } }
 
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json({ error: "Erro interno ao buscar jogo" }, { status: 500 });
+    return NextResponse.json( `Erro interno ao buscar jogo ${error}`);
   }
 }
