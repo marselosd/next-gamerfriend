@@ -1,6 +1,6 @@
 import React from "react";
 import { CommonCardProp } from "@/types/interfaces/interfaces";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
 
 export default function CommonCard({ cardName, tittle, children, img }: CommonCardProp) {
     return (
@@ -24,7 +24,7 @@ export default function CommonCard({ cardName, tittle, children, img }: CommonCa
                     image={img.image}
                     alt={img.alt}
                     sx={{
-                        height: 160, 
+                        height: 160,
                         width: '100%',
                         objectFit: 'cover',
                     }}
@@ -37,6 +37,7 @@ export default function CommonCard({ cardName, tittle, children, img }: CommonCa
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
+                    paddingBottom: '16px !important',
                 }}
             >
                 <Typography sx={{ color: 'white', fontSize: 14, mb: 1 }}>
@@ -47,9 +48,18 @@ export default function CommonCard({ cardName, tittle, children, img }: CommonCa
                     {tittle}
                 </Typography>
 
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                    {children}
-                </Typography>
+                <Box
+                    sx={{
+                        mt: 1,
+                        overflowY: 'auto',
+                        maxHeight: 120,
+                        pr: 1, // espaço pro scrollbar não sobrepor o texto
+                    }}
+                >
+                    <Typography variant="body2">
+                        {children}
+                    </Typography>
+                </Box>
             </CardContent>
         </Card>
     );

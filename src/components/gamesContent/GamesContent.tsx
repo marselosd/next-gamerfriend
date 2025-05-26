@@ -32,7 +32,6 @@ export default function GamesContent() {
 
   return (
     <>
-      {/* Seção de busca */}
       <section className="flex flex-col sm:flex-row items-center gap-3">
         <form onSubmit={handleSearch} className="flex gap-2 w-full sm:w-auto">
           <input
@@ -42,12 +41,6 @@ export default function GamesContent() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border border-gray-300 rounded-md px-3 py-1 w-full"
           />
-          <button
-            type="submit"
-            className="bg-[#6667AB] text-white px-4 py-1 rounded-md hover:bg-[#4A4B83]"
-          >
-            Buscar
-          </button>
         </form>
 
         <select
@@ -62,7 +55,6 @@ export default function GamesContent() {
         </select>
       </section>
 
-      {/* Seção de cards */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading && <p>Carregando jogos...</p>}
         {error && <p className="text-red-500">Erro ao carregar jogos</p>}
@@ -77,12 +69,11 @@ export default function GamesContent() {
               alt: game.name,
             }}
           >
-            {cardGames.desc}
+            {game.deck || game.description || "Sem descrição disponível."}
           </CardShareFav>
         ))}
       </section>
 
-      {/* Paginação */}
       <section className="flex justify-center gap-4 mt-6">
         <button
           onClick={() => setPage((p) => Math.max(p - 1, 1))}

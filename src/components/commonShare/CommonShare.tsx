@@ -1,3 +1,4 @@
+'use client';
 import { IconButton } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import { useAppDispatch } from "@/redux/hooks";
