@@ -1,5 +1,7 @@
 'use client'
 
+import { useAppDispatch } from "@/redux/hooks";
+import { loginWithGoogle, logoutUser } from "@/redux/features/authActions";
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -9,9 +11,12 @@ import Link from 'next/link'
 import Navbar from '../navBar/NavBar'
 
 export default function Header() {
+  
+  const dispatch = useDispatch(); 
+  const authDispatch = useAppDispatch(); 
+  const user = useSelector((state: RootState) => state.auth.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
-  const dispatch = useDispatch()
   const { navbar } = getTranslations(currentLanguage)
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -79,21 +84,29 @@ export default function Header() {
               </select>
             </div>
 
-            {/* Auth buttons - desktop */}
             <div className="hidden md:flex items-center space-x-2">
-              <Link
-                href="/login"
-                className="px-3 py-1 rounded-md text-sm font-medium hover:bg-[#4A4B83]"
-              >
-                {navbar.login}
-              </Link>
-              <Link
-                href="/register"
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm">{user.name}</span>
+                {user.photo && (
+                  <img src={user.photo} alt="User" className="w-8 h-8 rounded-full" />
+                )}
+                <button
+                  onClick={() => authDispatch(logoutUser())}
+                  className="px-3 py-1 rounded-md text-sm font-medium bg-white text-[#6667AB] hover:bg-[#f0f0f0] transition-colors"
+                >
+                  Sair
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => authDispatch(loginWithGoogle())}
                 className="px-3 py-1 rounded-md text-sm font-medium border border-white hover:bg-white hover:text-[#6667AB] transition-colors"
               >
-                {navbar.createAccount}
-              </Link>
-            </div>
+                Entrar com Google
+              </button>
+            )}
+          </div>
           </div>
         </div>
       </div>

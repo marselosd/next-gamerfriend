@@ -1,4 +1,4 @@
-import { CommonCardProp } from "@/types/interfaces/interfaces";
+import { CardProp } from "@/types/interfaces/interfaces";
 import React, { useEffect, useState } from "react";
 import CommonFavorite from "../commonFavorite/CommonFavorite";
 import CommonShare from "../commonShare/CommonShare";
@@ -6,7 +6,7 @@ import CommonCard from "./CommonCard";
 import { useAppDispatch } from "@/redux/hooks";
 import { setWindowWidth } from "./WindowSlice";
 
-export default function CardShareFav({ cardName, tittle, children, img, id}: CommonCardProp) {
+export default function CardShareFav({ cardName, tittle, children, img, id}: CardProp) {
     const dispatch = useAppDispatch();
     const [imageUrl, setImageUrl] = useState("");
 
@@ -25,7 +25,8 @@ export default function CardShareFav({ cardName, tittle, children, img, id}: Com
         <div>
             <CommonCard cardName={cardName} tittle={tittle}img={img}>
                 {children}
-                <CommonFavorite itemId={id ? id : ""} />
+                <br/>
+                <CommonFavorite itemId={id ? id : ""}/>
                 <CommonShare shareUrl={imageUrl}/>
             </CommonCard>
         </div>

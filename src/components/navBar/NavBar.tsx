@@ -21,8 +21,8 @@ export default function Navbar({isMobile}: NavbarProps) {
       <Link href="/games" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#4A4B83]">
         {navbar.games}
       </Link>
-      <Link href="/lists" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#4A4B83]">
-        {navbar.lists}
+      <Link href="/profile" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#4A4B83]">
+        {navbar.profile}
       </Link>
       <Link href="/reviews" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#4A4B83]">
         {navbar.reviews}

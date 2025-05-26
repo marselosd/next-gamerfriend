@@ -1,15 +1,9 @@
-import HeroSection from '@/components/homeContent/HeroSection'
-import CardSection from '@/components/homeContent/CardSection'
+import Main from './home/page'
 
 export default function Home() {
   return (
     <>
-    <section className="flex flex-col">
-      <HeroSection/>
-    </section>
-    <section>
-      <CardSection/>
-    </section>
+    <Main/>
     </>
   )
 }

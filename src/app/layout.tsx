@@ -1,9 +1,7 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Providers } from '@/components/providers'
 import './globals.css'
-import Footer from '@/components/footer/Footer'
-import Header from '@/components/header/Header'
+import { Inter } from 'next/font/google'
+import type { Metadata } from 'next'
+import ClientLayout from '@/components/ClientLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,19 +10,13 @@ export const metadata: Metadata = {
   description: 'Track, rate and discover new games with Next-GamerFriend',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-        <Header />
+        <ClientLayout>
           {children}
-        <Footer />
-        </Providers>
+        </ClientLayout>
       </body>
     </html>
   )
