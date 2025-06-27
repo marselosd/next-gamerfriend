@@ -6,7 +6,9 @@
     "reviews": "Avaliações",
     "login": "Entrar",
     "createAccount": "Criar Conta",
-    "search": "Pesquisar jogos..."
+    "search": "Pesquisar jogos...",
+    "out": "sair",
+    "opt": "Logar ou Registrar"
   },
   "header": {
     "title": "Next-GamerFriend",
@@ -20,14 +22,29 @@
     "subtitle": "Acompanhe, avalie e descubra novos jogos com o Next-GamerFriend"
   },
   "hero_card": {
-    "cardName": "Bem Vindo",
-    "cardTitle1": "Sobre",
-    "cardTitle2": "Avalie",
-    "cardTitle3": "Exiba",
-    "cardChildren1": "Um site para organizar suas opiniões sobre jogos",
-    "cardChildren2": "Avalie seus jogos favoritos ou mais odiados",
-    "cardChildren3": "Exiba ao mundo seus jogos favoritos!"
-  },
+  "cardName": "GameFriends",
+
+  "cardTitle1": "Descubra",
+  "subTitle1": "Explore um novo jeito de organizar sua vida gamer",
+  "info1_1": "Crie sua própria biblioteca de jogos",
+  "info1_2": "Acompanhe os títulos que você já jogou ou quer jogar",
+  "info1_3": "Encontre jogos que combinam com você",
+  "highlight1": "Tudo em um só lugar",
+
+  "cardTitle2": "Avalie",
+  "subTitle2": "Compartilhe suas experiências com a comunidade",
+  "info2_1": "Dê notas e escreva reviews sobre os jogos",
+  "info2_2": "Ajude outros jogadores com suas opiniões",
+  "info2_3": "Mantenha um histórico das suas avaliações",
+  "highlight2": "Sua voz importa",
+
+  "cardTitle3": "Mostre",
+  "subTitle3": "Transforme seu perfil em uma vitrine gamer",
+  "info3_1": "Exiba seus jogos favoritos com estilo",
+  "info3_2": "Compartilhe sua coleção com amigos",
+  "info3_3": "Destaque os jogos que marcaram sua jornada",
+  "highlight3": "Seu gosto, sua identidade"
+},
   "footer": {
     "text": "© 2025 Next-GamerFriend. Todos os direitos reservados."
   },
@@ -35,5 +52,36 @@
     "title": "Jogos",
     "desc": "Soulslike lançado em 2014",
     "desc2": "JRPG Lançado em 2006"
-  }
+  },
+  "loginPage": {
+    "title": "Entrar na sua conta",
+    "usernameLabel": "Usuário",
+    "usernamePlaceholder": "Digite seu usuário",
+    "passwordLabel": "Senha",
+    "passwordPlaceholder": "Digite sua senha",
+    "loginButton": "Entrar",
+    "loadingButton": "Entrando...",
+    "orLoginWith": "ou entre com",
+    "googleButton": "Google",
+    "createAccount": "Criar conta",
+    "loginError": "Erro inesperado no login"
+  },
+  "registerPage": {
+  "title": "Criar conta",
+  "emailLabel": "Email",
+  "emailPlaceholder": "Digite seu e-mail",
+  "usernameLabel": "Usuário",
+  "usernamePlaceholder": "Digite seu nome de usuário",
+  "passwordLabel": "Senha",
+  "passwordPlaceholder": "Digite sua senha",
+  "confirmPasswordLabel": "Confirmar Senha",
+  "confirmPasswordPlaceholder": "Repita a senha",
+  "registerButton": "Registrar",
+  "loadingButton": "Registrando...",
+  "passwordMismatch": "As senhas não são iguais.",
+  "registerError": "Erro ao registrar.",
+  "connectionError": "Erro ao conectar com o servidor.",
+  "success": "Registro efetuado com sucesso! Você pode fazer login agora.",
+  "backToLogin": "Já tem uma conta? Voltar para o login"
+}
 }

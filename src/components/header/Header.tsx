@@ -1,7 +1,7 @@
 'use client'
 
-import { useAppDispatch } from "@/redux/hooks";
-import { loginWithGoogle, logoutUser } from "@/redux/features/authActions";
+import { useAppDispatch } from "@/redux/hooks"
+import { logoutUser } from "@/redux/features/authActions"
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -11,10 +11,9 @@ import Link from 'next/link'
 import Navbar from '../navBar/NavBar'
 
 export default function Header() {
-  
-  const dispatch = useDispatch(); 
-  const authDispatch = useAppDispatch(); 
-  const user = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useDispatch()
+  const authDispatch = useAppDispatch()
+  const user = useSelector((state: RootState) => state.auth.user)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
   const { navbar } = getTranslations(currentLanguage)
@@ -36,9 +35,9 @@ export default function Header() {
               >
                 <span className="sr-only">Open main menu</span>
                 <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                        d="M4 6h16M4 12h16M4 18h16" />
+                    d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
             </div>
@@ -48,13 +47,13 @@ export default function Header() {
                 {navbar.title}
               </Link>
             </div>
+
             <Navbar />
-            
           </div>
 
           <div className="flex items-center">
             <div className="hidden md:flex items-center mr-4">
-              <button 
+              <button
                 className="p-1 rounded-full hover:bg-[#4A4B83]"
                 aria-label={navbar.search}
               >
@@ -77,28 +76,28 @@ export default function Header() {
             </div>
 
             <div className="hidden md:flex items-center space-x-2">
-            {user ? (
-              <div className="flex items-center space-x-2">
-                <span className="text-sm">{user.name}</span>
-                {user.photo && (
-                  <img src={user.photo} alt="User" className="w-8 h-8 rounded-full" />
-                )}
-                <button
-                  onClick={() => authDispatch(logoutUser())}
-                  className="px-3 py-1 rounded-md text-sm font-medium bg-white text-[#6667AB] hover:bg-[#f0f0f0] transition-colors"
+              {user ? (
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm">{user.name}</span>
+                  {user.photo && (
+                    <img src={user.photo} alt="User" className="w-8 h-8 rounded-full" />
+                  )}
+                  <button
+                    onClick={() => authDispatch(logoutUser())}
+                    className="px-3 py-1 rounded-md text-sm font-medium bg-white text-[#6667AB] hover:bg-[#f0f0f0] transition-colors"
+                  >
+                    {navbar.out}
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="px-3 py-1 rounded-md text-sm font-medium border border-white hover:bg-white hover:text-[#6667AB] transition-colors"
                 >
-                  Sair
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => authDispatch(loginWithGoogle())}
-                className="px-3 py-1 rounded-md text-sm font-medium border border-white hover:bg-white hover:text-[#6667AB] transition-colors"
-              >
-                Entrar com Google
-              </button>
-            )}
-          </div>
+                  {navbar.opt}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -106,7 +105,7 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden bg-[#6667AB] px-4 pb-4">
           <Navbar isMobile />
-          
+
           <div className="flex flex-col space-y-2 mt-4">
             <Link
               href="/login"
@@ -137,7 +136,7 @@ export default function Header() {
             </select>
           </div>
         </div>
-    )}
+      )}
     </nav>
   )
 }
