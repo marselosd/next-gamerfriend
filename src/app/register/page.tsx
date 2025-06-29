@@ -54,8 +54,9 @@ export default function RegisterPage() {
         setPassword("")
         setConfirmPassword("")
       }
-    } catch (err) {
-      setError(t.connectionError)
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : t.connectionError
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

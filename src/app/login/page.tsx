@@ -6,9 +6,10 @@ import { FormEvent, useState } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
 import { getTranslations } from "@/locales"
+import { ThunkDispatch } from "@reduxjs/toolkit"
 
 export default function LoginPage() {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch() as ThunkDispatch<any, any, any>
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
   const { loginPage: t } = getTranslations(currentLanguage)
 
@@ -22,9 +23,10 @@ export default function LoginPage() {
     setError(null)
     setLoading(true)
     try {
-      await dispatch(loginWithCredentials(username, password) as any)
-    } catch (err: any) {
-      setError(err.message || t.loginError)
+      await dispatch(loginWithCredentials(username, password))
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : t.loginError
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

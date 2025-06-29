@@ -1,46 +1,80 @@
-import { auth, provider, signInWithPopup, signOut as firebaseSignout } from "@/firebase";
+import {
+  auth,
+  provider,
+  signInWithPopup,
+  signOut as firebaseSignout,
+  GoogleAuthProvider,
+} from "@/firebase";
 import { setUser, setLoading, logout, setFavorites } from "@/redux/slices/authSlice";
 import { AppDispatch } from "../store";
 import { browserLocalPersistence, setPersistence } from "firebase/auth";
 
-// Login com Google
+// Login com Google usando Google ID Token
 export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(true));
     await setPersistence(auth, browserLocalPersistence);
+
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    dispatch(setUser({
-      name: user.displayName || "",
-      email: user.email || "",
-      photo: user.photoURL || ""
-    }));
 
-    const res = await fetch(`/api/favorites?userId=${user.email}`);
-    const data = await res.json();
-    if (data.favorites) {
-      dispatch(setFavorites(data.favorites));
+    // Pega o Google ID Token corretamente
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const idToken = credential?.idToken;
+
+    if (!idToken) {
+      throw new Error("Não foi possível obter o ID Token do Google.");
+    }
+
+    console.log("Token do Google a ser enviado:", idToken);
+
+    const backendResponse = await fetch("http://localhost:8080/auth/google", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
+    });
+
+    console.log("Resposta backend:", backendResponse.status);
+
+    const backendToken = await backendResponse.text();
+    if (!backendResponse.ok) {
+      throw new Error(backendToken || "Erro na autenticação com o backend.");
+    }
+
+    localStorage.setItem("token", backendToken);
+
+    dispatch(
+      setUser({
+        name: user.displayName || "",
+        email: user.email || "",
+        photo: user.photoURL || "",
+      })
+    );
+
+    // Buscar favoritos (opcional)
+    if (user.email) {
+      const res = await fetch(`/api/favorites?userId=${user.email}`);
+      const data = await res.json();
+      if (data.favorites) {
+        dispatch(setFavorites(data.favorites));
+      }
     }
   } catch (error) {
-    console.error("Login failed", error);
+    console.error("Erro no login com Google:", error);
   } finally {
     dispatch(setLoading(false));
   }
 };
 
-// Login com credenciais (username e senha)
+// Login com usuário/senha
 export const loginWithCredentials = (username: string, password: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(true));
 
-    // 1. Faz login na API local
     const loginResponse = await fetch("http://localhost:8080/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        login: username,
-        senha: password,
-      }),
+      body: JSON.stringify({ login: username, senha: password }),
     });
 
     if (!loginResponse.ok) {
@@ -49,45 +83,27 @@ export const loginWithCredentials = (username: string, password: string) => asyn
     }
 
     const rawToken = await loginResponse.text();
-    let token = rawToken;
-
-    if (token.startsWith("Bearer ")) {
-      token = token.substring(7);
-    }
-
-    if (!token) {
-      throw new Error("Token não recebido");
-    }
-
+    const token = rawToken.startsWith("Bearer ") ? rawToken.substring(7) : rawToken;
 
     localStorage.setItem("token", token);
 
-
     const userResponse = await fetch("http://localhost:8080/auth/Usuario-logado", {
-      headers: { "Authorization": `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
-
-    if (!userResponse.ok) {
-      throw new Error("Falha ao obter dados do usuário");
-    }
 
     const user = await userResponse.json();
 
-    // 3. Atualiza estado Redux
-    dispatch(setUser({
-      name: user.login,
-      email: user.email,
-      photo: "", 
-    }));
+    dispatch(
+      setUser({
+        name: user.login,
+        email: user.email,
+        photo: "",
+      })
+    );
 
-    // 4. Busca favoritos
     const favRes = await fetch(`/api/favorites?userId=${user.email}`);
     const favData = await favRes.json();
-    if (favData.favorites) {
-      dispatch(setFavorites(favData.favorites));
-    } else {
-      dispatch(setFavorites([]));
-    }
+    dispatch(setFavorites(favData.favorites || []));
 
     return { success: true };
   } catch (error: any) {
@@ -98,7 +114,13 @@ export const loginWithCredentials = (username: string, password: string) => asyn
   }
 };
 
+// Logout (Google ou padrão)
 export const logoutUser = () => async (dispatch: AppDispatch) => {
-  await firebaseSignout(auth);
-  dispatch(logout());
+  try {
+    await firebaseSignout(auth);
+    localStorage.removeItem("token"); // Remove token do backend
+    dispatch(logout());
+  } catch (error) {
+    console.error("Erro ao fazer logout:", error);
+  }
 };
