@@ -6,7 +6,9 @@
     "reviews": "Reviews",
     "login": "Login",
     "createAccount": "Create Account",
-    "search": "Search games..."
+    "search": "Search games...",
+    "out": "Log out",
+    "opt": "Login and Register"
   },
   "header": {
     "title": "Next-GamerFriend",
@@ -17,16 +19,31 @@
   },
   "hero": {
     "title": "Your gaming companion",
-    "subtitle": "Track, rate and discover new games with Next-GamerFriend"
+    "subtitle": "Track, rate, and discover new games with Next-GamerFriend"
   },
   "hero_card": {
-    "cardName": "Welcome",
-    "cardTitle1": "About",
+    "cardName": "GameFriends",
+
+    "cardTitle1": "Discover",
+    "subTitle1": "Explore a new way to organize your gaming life",
+    "info1_1": "Create your own game library",
+    "info1_2": "Track the games you’ve played or want to play",
+    "info1_3": "Find games that match your style",
+    "highlight1": "All in one place",
+
     "cardTitle2": "Rate",
+    "subTitle2": "Share your experiences with the community",
+    "info2_1": "Give scores and write reviews about games",
+    "info2_2": "Help other gamers with your insights",
+    "info2_3": "Keep a record of your reviews",
+    "highlight2": "Your voice matters",
+
     "cardTitle3": "Showcase",
-    "cardChildren1": "A site to organize your thoughts on games",
-    "cardChildren2": "Rate your favorite or most hated games",
-    "cardChildren3": "Show the world your favorite games!"
+    "subTitle3": "Turn your profile into a gamer showcase",
+    "info3_1": "Display your favorite games in style",
+    "info3_2": "Share your collection with friends",
+    "info3_3": "Highlight the games that marked your journey",
+    "highlight3": "Your taste, your identity"
   },
   "footer": {
     "text": "© 2025 Next-GamerFriend. All rights reserved."
@@ -35,5 +52,36 @@
     "title": "Games",
     "desc": "Soulslike released in 2014",
     "desc2": "JRPG released in 2006"
-  }
+  },
+  "loginPage": {
+  "title": "Sign in to your account",
+  "usernameLabel": "Username",
+  "usernamePlaceholder": "Enter your username",
+  "passwordLabel": "Password",
+  "passwordPlaceholder": "Enter your password",
+  "loginButton": "Sign in",
+  "loadingButton": "Signing in...",
+  "orLoginWith": "or sign in with",
+  "googleButton": "Google",
+  "createAccount": "Create account",
+  "loginError": "Unexpected login error"
+},
+"registerPage": {
+  "title": "Create account",
+  "emailLabel": "Email",
+  "emailPlaceholder": "Enter your email",
+  "usernameLabel": "Username",
+  "usernamePlaceholder": "Enter your username",
+  "passwordLabel": "Password",
+  "passwordPlaceholder": "Enter your password",
+  "confirmPasswordLabel": "Confirm Password",
+  "confirmPasswordPlaceholder": "Repeat your password",
+  "registerButton": "Register",
+  "loadingButton": "Registering...",
+  "passwordMismatch": "Passwords do not match.",
+  "registerError": "Error while registering.",
+  "connectionError": "Failed to connect to the server.",
+  "success": "Registration successful! You can now log in.",
+  "backToLogin": "Already have an account? Go back to login"
+}
 }

@@ -1,39 +1,87 @@
 {
-    "navbar": {
-      "title": "Next-GamerFriend",
-      "games": "Juegos",
-      "profile": "Perfil",
-      "reviews": "Reseñas",
-      "login": "Iniciar sesión",
-      "createAccount": "Crear Cuenta",
-      "search": "Buscar juegos..."
-    },
-    "header": {
-        "title": "Next-GamerFriend",
-        "subtitle": "Sigue tu viaje de juegos"
-      },
-      "auth": {
-        "createAccount": "Crear Cuenta"
-      },
-      "hero": {
-        "title": "Tu compañero de juegos",
-        "subtitle": "Sigue, califica y descubre nuevos juegos con Next-GamerFriend"
-      },
-      "hero_card": {
-        "cardName": "Bienvenido",
-        "cardTitle1": "Acerca de",
-        "cardTitle2": "Califica",
-        "cardTitle3": "Muestra",
-        "cardChildren1": "Un sitio para organizar tus opiniones sobre juegos",
-        "cardChildren2": "Califica tus juegos favoritos o más odiados",
-        "cardChildren3": "¡Muestra al mundo tus juegos favoritos!"
-      },
-      "footer": {
-        "text": "© 2025 Next-GamerFriend. Todos los derechos reservados."
-      },
-      "cardGames": {
-        "title": "Juegos",
-        "desc": "Soulslike lanzado en 2014",
-        "desc2": "JRPG lanzado en 2006"
-      }
-  }
+  "navbar": {
+    "title": "Next-GamerFriend",
+    "games": "Juegos",
+    "profile": "Perfil",
+    "reviews": "Reseñas",
+    "login": "Iniciar sesión",
+    "createAccount": "Crear cuenta",
+    "search": "Buscar juegos...",
+    "out": "finalizar la sesión",
+    "opt": "Iniciar sesión y Registrarse"
+  },
+  "header": {
+    "title": "Next-GamerFriend",
+    "subtitle": "Sigue tu viaje gamer"
+  },
+  "auth": {
+    "createAccount": "Crear cuenta"
+  },
+  "hero": {
+    "title": "Tu compañero de juegos",
+    "subtitle": "Sigue, califica y descubre nuevos juegos con Next-GamerFriend"
+  },
+  "hero_card": {
+    "cardName": "GameFriends",
+
+    "cardTitle1": "Descubrir",
+    "subTitle1": "Explora una nueva forma de organizar tu vida gamer",
+    "info1_1": "Crea tu propia biblioteca de juegos",
+    "info1_2": "Sigue los títulos que ya jugaste o quieres jugar",
+    "info1_3": "Encuentra juegos que encajen contigo",
+    "highlight1": "Todo en un solo lugar",
+
+    "cardTitle2": "Calificar",
+    "subTitle2": "Comparte tus experiencias con la comunidad",
+    "info2_1": "Pon calificaciones y escribe reseñas sobre los juegos",
+    "info2_2": "Ayuda a otros jugadores con tus opiniones",
+    "info2_3": "Mantén un historial de tus valoraciones",
+    "highlight2": "Tu voz importa",
+
+    "cardTitle3": "Mostrar",
+    "subTitle3": "Convierte tu perfil en una vitrina gamer",
+    "info3_1": "Muestra tus juegos favoritos con estilo",
+    "info3_2": "Comparte tu colección con amigos",
+    "info3_3": "Destaca los juegos que marcaron tu camino",
+    "highlight3": "Tus gustos, tu identidad"
+  },
+  "footer": {
+    "text": "© 2025 Next-GamerFriend. Todos los derechos reservados."
+  },
+  "cardGames": {
+    "title": "Juegos",
+    "desc": "Soulslike lanzado en 2014",
+    "desc2": "JRPG lanzado en 2006"
+  },
+  "loginPage": {
+  "title": "Iniciar sesión en tu cuenta",
+  "usernameLabel": "Usuario",
+  "usernamePlaceholder": "Ingresa tu usuario",
+  "passwordLabel": "Contraseña",
+  "passwordPlaceholder": "Ingresa tu contraseña",
+  "loginButton": "Iniciar sesión",
+  "loadingButton": "Iniciando sesión...",
+  "orLoginWith": "o inicia sesión con",
+  "googleButton": "Google",
+  "createAccount": "Crear cuenta",
+  "loginError": "Error inesperado al iniciar sesión"
+},"registerPage": {
+  "title": "Crear cuenta",
+  "emailLabel": "Correo electrónico",
+  "emailPlaceholder": "Ingresa tu correo electrónico",
+  "usernameLabel": "Usuario",
+  "usernamePlaceholder": "Ingresa tu nombre de usuario",
+  "passwordLabel": "Contraseña",
+  "passwordPlaceholder": "Ingresa tu contraseña",
+  "confirmPasswordLabel": "Confirmar contraseña",
+  "confirmPasswordPlaceholder": "Repite tu contraseña",
+  "registerButton": "Registrar",
+  "loadingButton": "Registrando...",
+  "passwordMismatch": "Las contraseñas no coinciden.",
+  "registerError": "Error al registrar.",
+  "connectionError": "No se pudo conectar con el servidor.",
+  "success": "¡Registro exitoso! Ahora puedes iniciar sesión.",
+  "backToLogin": "¿Ya tienes una cuenta? Volver al inicio de sesión"
+}
+
+}
