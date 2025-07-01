@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { fetchFavorites } from "@/redux/thunk/favoritesThunk";
 import CardShare from "../commonCard/CardShare";
-import { GameData } from "@/types/interfaces/interfaces";
+import { GamePayloadReturn } from "@/types/interfaces/interfaces";
 
 export default function ProfileContent() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const favorites = useAppSelector(state => state.auth.items);
-  const [favoritesData, setFavoritesData] = useState<GameData[]>([]);
+  const [favoritesData, setFavoritesData] = useState<GamePayloadReturn[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -62,13 +62,13 @@ export default function ProfileContent() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {favoritesData.map(game => (
           <CardShare
-            key={game.guid}
-            id={game.guid}
+            key={game.id}
+            id={game.id}
             cardName="Favorito"
-            tittle={game.name}
-            img={{ image: game.image?.small_url || "", alt: game.name }}
+            tittle={game.titulo}
+            img={game.img}
           >
-            {game.deck || game.description || "Sem descrição disponível."}
+            {game.descricao}
           </CardShare>
         ))}
       </div>

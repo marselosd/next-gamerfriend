@@ -14,7 +14,7 @@ export default function CardShare({ cardName, tittle, children, img }: CardProp)
             dispatch(setWindowWidth(window.innerWidth))
 
             const base = window.location.origin;
-            const fullUrl = img ? `${base}/${img.image}` : window.location.href;
+            const fullUrl = img ? `${base}/${img}` : window.location.href;
             setImageUrl(fullUrl);
         }
     }, [dispatch, img])
