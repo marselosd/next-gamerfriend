@@ -7,17 +7,17 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { toggleFavorite } from "@/redux/thunk/favoritesThunk";
 
 interface Props {
-  itemId: string;
+  itemId: number;
 };
 
 export default function CommonFavorite({itemId} : Props) {
     const dispatch = useAppDispatch();
     const favorites = useAppSelector(state => state.auth.items);
 
-    const isFavorite = favorites.includes(itemId);
+    const isFavorite = favorites.includes(String(itemId));
 
     const handleToggleFavorite = () => {
-        dispatch(toggleFavorite(itemId));
+        dispatch(toggleFavorite(String(itemId)));
     };
 
     return (

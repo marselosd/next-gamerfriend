@@ -6,6 +6,7 @@ export interface CommonCardProp {
     image: string;
     alt: string;
   };
+  avgRating: number;
 }
 
 export interface CardProp extends CommonCardProp {
@@ -43,6 +44,7 @@ export interface GamePayloadUpdate extends GamePayload {
   avgRating: number;
   totalRating: number;
 }
+
 
 export interface ReviewPayload {
   idJogo: number;

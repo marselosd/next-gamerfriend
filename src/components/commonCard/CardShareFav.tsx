@@ -6,7 +6,7 @@ import CommonCard from "./CommonCard";
 import { useAppDispatch } from "@/redux/hooks";
 import { setWindowWidth } from "./WindowSlice";
 
-export default function CardShareFav({ cardName, tittle, children, img, id}: CardProp) {
+export default function CardShareFav({ cardName, tittle, children, img, avgRating, id}: CardProp) {
     const dispatch = useAppDispatch();
     const [imageUrl, setImageUrl] = useState("");
 
@@ -23,11 +23,12 @@ export default function CardShareFav({ cardName, tittle, children, img, id}: Car
     return(
         <>
         <div>
-            <CommonCard cardName={cardName} tittle={tittle}img={img}>
+            <CommonCard cardName={cardName} tittle={tittle}img={img} avgRating={avgRating}>
                 {children}
                 <br/>
-                <CommonFavorite itemId={id ? id : ""}/>
+                <CommonFavorite itemId={id}/>
                 <CommonShare shareUrl={imageUrl}/>
+                <br/>
             </CommonCard>
         </div>
         </>

@@ -14,13 +14,13 @@ export const gamerFriendApi = createApi({
   },
   }),
   endpoints: (builder) => ({
-    getGames: builder.query<GamePayloadReturn[], { page: number; size: number; search?: string; sort?: string}>({
-      query: ({ page = 0 , size=21, search='',sort=''}) => {
+    getGames: builder.query<GamePayloadReturn[], { page: number; size: number; filter?: string; search?: string}>({
+      query: ({ page = 0 , size=21, filter='',search=''}) => {
         const params = new URLSearchParams();
         params.set('page', String(page));
         params.set('size', String(size));
+        if (filter) params.set('filter', filter);
         if (search) params.set('search', search);
-        if (sort) params.set('sort', sort);
         return `jogos?${params.toString()}`;
       },
     }),
