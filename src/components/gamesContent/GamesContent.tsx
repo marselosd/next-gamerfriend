@@ -5,7 +5,7 @@ import { getTranslations } from "@/locales";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useGetGamesQuery } from "./gamesApi";
-import { GameResult } from "@/types/interfaces/interfaces";
+import { GamePayloadReturn } from "@/types/interfaces/interfaces";
 
 export default function GamesContent() {
   const currentLanguage = useSelector(
@@ -13,12 +13,14 @@ export default function GamesContent() {
   );
   const { cardGames } = getTranslations(currentLanguage);
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(21);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
   const { data, error, isLoading } = useGetGamesQuery({
     page,
+    size,
     search: searchTerm,
     sort: sortOrder,
   });
@@ -26,11 +28,13 @@ export default function GamesContent() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setPage(1);
+    setSize(21);
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(e.target.value);
     setPage(1);
+    setSize(21);
   };
 
   return (
@@ -66,19 +70,18 @@ export default function GamesContent() {
           {error && <p className="text-red-500">Erro ao carregar jogos</p>}
           {!isLoading &&
             !error &&
-            data?.results?.map((game: GameResult) => (
+            data?.map((game: GamePayloadReturn) => (
               <CardShareFav
                 key={game.id}
-                id={String(game.id)}
+                id={game.id}
                 cardName={cardGames.title}
-                tittle={game.name}
+                tittle={game.titulo}
                 img={{
-                  image: game.image?.small_url || "",
-                  alt: game.name,
+                  image: game.img,
+                  alt: game.titulo,
                 }}
               >
-                {/* Aqui adicionamos a descrição do jogo */}
-                {game.deck || game.description || "Sem descrição disponível."}
+                {game.descricao}
               </CardShareFav>
             ))}
         </div>
@@ -96,7 +99,7 @@ export default function GamesContent() {
         <span className="text-sm font-medium">Página {page}</span>
         <button
           onClick={() => setPage((p) => p + 1)}
-          disabled={!data?.results?.length || data.results.length < 20}
+          disabled={!data?.length || data.length < 20}
           className="px-4 py-2 bg-[#6667AB] text-white rounded-md disabled:opacity-50 hover:bg-[#57599c] transition-colors"
         >
           Próximo

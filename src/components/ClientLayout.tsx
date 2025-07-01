@@ -1,6 +1,6 @@
 'use client'
 
-import { Providers } from '@/components/providers'
+import { Providers } from '@/components/Providers'
 import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
 import { AuthListener } from '@/app/AuthListener'

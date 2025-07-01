@@ -4,7 +4,7 @@ import languageReducer from './slices/languageSlice'
 import favoritesReducer from '@/components/commonFavorite/FavoritesSlice';
 import shareReducer from "@/components/commonShare/ShareSlice";
 import windowReducer from "@/components/commonCard/WindowSlice";
-import { giantBombApi } from '@/components/gamesContent/gamesApi';
+import { gamerFriendApi } from '@/components/gamesContent/gamesApi';
 
 
 export const store = configureStore({
@@ -14,10 +14,10 @@ export const store = configureStore({
     favorites: favoritesReducer,
     share: shareReducer,
     window: windowReducer,
-    [giantBombApi.reducerPath]: giantBombApi.reducer,
+    [gamerFriendApi.reducerPath]: gamerFriendApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(giantBombApi.middleware),
+    getDefaultMiddleware().concat(gamerFriendApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

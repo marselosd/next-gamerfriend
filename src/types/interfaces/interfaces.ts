@@ -2,11 +2,14 @@ export interface CommonCardProp {
   cardName: string;
   tittle: string;
   children?: React.ReactNode;
-  img?: CommonImageProp;
+  img: {
+    image: string;
+    alt: string;
+  };
 }
 
 export interface CardProp extends CommonCardProp {
-  id: string;
+  id: number;
 }
 
 export interface CommonImageProp {
@@ -20,26 +23,37 @@ export interface User {
   photo: string | null;
 }
 
-export interface GameData {
-  guid: string;
-  name: string;
-  image?: {
-    small_url?: string;
-  };
-  deck?: string;
-  description?: string;
+export interface GamePayload {
+  titulo: string;
+  anoLancamento: number;
+  produtora: string;
+  img: string;
+  genero: string[];
+  plataformas: string[];
+  descricao: string;
 }
 
-export interface GameResult {
-  id: number | string;
-  name: string;
-  image?: {
-    small_url?: string;
-  };
-  deck?: string;
-  description?: string;
+export interface GamePayloadReturn extends GamePayload {
+  id: number,
+  avgRating: number;
+  totalRating: number;
 }
 
-export interface GamesApiResponse {
-  results: GameResult[];
+export interface GamePayloadUpdate extends GamePayload {
+  avgRating: number;
+  totalRating: number;
+}
+
+export interface ReviewPayload {
+  idJogo: number;
+  rating: number;
+}
+
+export interface ReviewPayloadReturn extends ReviewPayload {
+  idUsuario: number;
+}
+
+export interface FavoritePayload {
+  idJogo: number;
+  favorito: boolean;
 }

@@ -124,3 +124,38 @@ export const logoutUser = () => async (dispatch: AppDispatch) => {
     console.error("Erro ao fazer logout:", error);
   }
 };
+
+export const restoreSession = () => async (dispatch: AppDispatch) => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  try {
+    dispatch(setLoading(true));
+
+    const response = await fetch("http://localhost:8080/auth/Usuario-logado", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) throw new Error("Token inválido ou expirado");
+
+    const user = await response.json();
+
+    dispatch(
+      setUser({
+        name: user.login,
+        email: user.email,
+        photo: "",
+      })
+    );
+
+    const favRes = await fetch(`/api/favorites?userId=${user.email}`);
+    const favData = await favRes.json();
+    dispatch(setFavorites(favData.favorites || []));
+  } catch (err) {
+    console.error("Erro ao restaurar sessão:", err);
+    localStorage.removeItem("token");
+    dispatch(logout()); 
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
