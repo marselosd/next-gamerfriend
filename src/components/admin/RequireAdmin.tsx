@@ -17,9 +17,7 @@ export default function RequireAdmin({ children }: RequireAdminProviderProps) {
 
   useEffect(() => {
     if (!loading) {
-      if (!hasValidRole) {
-        router.replace("/login");
-      } else if (user?.roles?.includes("ROLE_ADMIN")) {
+      if (user?.roles?.includes("ROLE_ADMIN")) {
         router.replace("/admin");
       }
     }

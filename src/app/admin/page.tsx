@@ -13,7 +13,7 @@ interface Jogo {
   descricao: string;
 }
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "https://apigamefriends.onrender.com";
 
 export default function AdminPage() {
   const [token, setToken] = useState<string | null>(null);
