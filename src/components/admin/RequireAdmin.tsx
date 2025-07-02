@@ -13,19 +13,20 @@ export default function RequireAdmin({ children }: RequireAdminProviderProps) {
   const router = useRouter();
   const { user, loading } = useSelector((state: RootState) => state.auth);
 
-  const hasValidRole = user?.roles?.includes("ROLE_USER") || user?.roles?.includes("ROLE_ADMIN");
-
   useEffect(() => {
     if (!loading) {
-      if (user?.roles?.includes("ROLE_ADMIN")) {
+      if (!user) {
+        router.replace("/login"); 
+      } else if (user?.roles?.includes("ROLE_ADMIN")) {
         router.replace("/admin");
       }
     }
-  }, [loading, hasValidRole, user, router]);
+  }, [loading, user, router]);
 
-  if (loading || !hasValidRole || user?.roles?.includes("ROLE_ADMIN")) {
+  if (loading || !user || user?.roles?.includes("ROLE_ADMIN")) {
     return null;
   }
+
 
   return <>{children}</>;
 }
