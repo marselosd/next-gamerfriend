@@ -1,4 +1,4 @@
-import { GamePayload, GamePayloadReturn, GamePayloadUpdate, ReviewPayloadReturn, ReviewPayload, FavoritePayload } from "@/types/interfaces/interfaces";
+import { GamePayload, GamePayloadReturn, GamePayloadUpdate, ReviewPayload, ReviewPayloadReturn} from "@/types/interfaces/interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const gamerFriendApi = createApi({
@@ -24,8 +24,8 @@ export const gamerFriendApi = createApi({
         return `jogos?${params.toString()}`;
       },
     }),
-    getGame: builder.query<GamePayloadReturn , {gameId: number}>({
-      query: ({gameId}) => `jogos/${gameId}`,
+    getGame: builder.query<GamePayloadReturn , {id: number}>({
+      query: ({id}) => `jogos/${id}`,
     }),
     addGame: builder.mutation<GamePayloadReturn, GamePayload> ({
       query: (newGame) => ({
@@ -61,18 +61,6 @@ export const gamerFriendApi = createApi({
         body: updateReview,
       }),
     }),
-    toggleFavorite: builder.mutation<FavoritePayload, FavoritePayload> ({
-      query: (toggle) => ({
-        url: 'jogos/favoritos',
-        method: 'PUT',
-        body: toggle,
-      }),
-    }),
-    getFavorites: builder.query<GamePayloadReturn[], void >({
-      query: () => {
-        return `usuarios/favoritos`;
-      },  
-    }),
   }),
 });
 
@@ -84,6 +72,4 @@ export const {
    useDeleteGameMutation,
    useCreateReviewMutation,
    useUpdateReviewMutation,
-   useToggleFavoriteMutation,
-   useGetFavoritesQuery
    } = gamerFriendApi;
