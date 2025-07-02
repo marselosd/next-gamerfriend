@@ -1,77 +1,119 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { fetchFavorites } from "@/redux/thunk/favoritesThunk";
-import CardShare from "../commonCard/CardShare";
-import { GamePayloadReturn } from "@/types/interfaces/interfaces";
+import { useAppSelector } from "@/redux/hooks";
+
+interface JogoAvaliado {
+  idJogo: number;
+  titulo: string;
+  descricao: string;
+  img: string;
+  rating: number;
+}
+
+const BASE_URL = "https://apigamefriends.onrender.com";
 
 export default function ProfileContent() {
-  const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
-  const favorites = useAppSelector(state => state.auth.items);
-  const [favoritesData, setFavoritesData] = useState<GamePayloadReturn[]>([]);
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+  const [jogosAvaliados, setJogosAvaliados] = useState<JogoAvaliado[]>([]);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user?.email) {
-      dispatch(fetchFavorites());
+    if (token && user) {
+      loadAvaliacoes();
     }
-  }, [user, dispatch]);
+  }, [token, user]);
 
-  useEffect(() => {
-    async function loadFavoritesData() {
-      if (favorites.length === 0) {
-        setFavoritesData([]);
-        return;
-      }
-      setLoading(true);
-      try {
-        const gamesData = await Promise.all(
-          favorites.map(async (guid: string) => {
-            const resGame = await fetch(`/api/giantbomb/game/${guid}`);
-            const dataGame = await resGame.json();
-            return dataGame.results;
-          })
-        );
-        setFavoritesData(gamesData);
-      } catch (error) {
-        console.error("Erro ao carregar dados dos favoritos:", error);
-      } finally {
-        setLoading(false);
-      }
+  const loadAvaliacoes = async () => {
+    setLoading(true);
+    try {
+      const [resReview, resJogos] = await Promise.all([
+        fetch(`${BASE_URL}/jogos/usuario/reviews`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        fetch(`${BASE_URL}/jogos?page=0&size=100`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+      ]);
+
+      if (!resReview.ok || !resJogos.ok) throw new Error("Erro ao carregar dados");
+
+      const reviews = await resReview.json(); 
+      const jogos = await resJogos.json();     
+      const avaliados: JogoAvaliado[] = reviews.map((r: any) => {
+        const jogo = jogos.find((j: any) => j.idJogo === r.idJogo);
+        return {
+          idJogo: r.idJogo,
+          titulo: jogo?.titulo || `Jogo ID ${r.idJogo}`,
+          descricao: jogo?.descricao || '',
+          img: jogo?.img || '',
+          rating: r.rating,
+        };
+      });
+
+      setJogosAvaliados(avaliados);
+    } catch (err: any) {
+      setMessage(err.message || "Erro ao carregar avaliações");
+    } finally {
+      setLoading(false);
     }
-    loadFavoritesData();
-  }, [favorites]);
+  };
 
-  const renderMessage = (text: string) => (
-    <div className="flex justify-center items-center h-64">
-      <div className="bg-[#6667AB] text-white p-6 rounded-lg shadow-md text-center max-w-md w-full">
-        <p className="text-lg font-medium">{text}</p>
+  if (!user) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="bg-[#4A4B83] text-white p-6 rounded-lg shadow-md text-center max-w-md w-full">
+          <p className="text-lg font-medium">Faça login para acessar seu perfil.</p>
+        </div>
       </div>
-    </div>
-  );
-
-  if (!user) return renderMessage("Faça login para ver seus favoritos.");
-  if (loading) return renderMessage("Carregando favoritos...");
-  if (favorites.length === 0) return renderMessage("Nenhum favorito salvo.");
+    );
+  }
 
   return (
-    <section className="px-4 py-8 max-w-7xl mx-auto">
-      <h2 className="text-2xl font-bold text-[#4A4B83] mb-6 text-center">Seus Jogos Favoritos</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {favoritesData.map(game => (
-          <CardShare
-            key={game.id}
-            id={game.id}
-            cardName="Favorito"
-            tittle={game.titulo}
-            img={game.img}
-          >
-            {game.descricao}
-          </CardShare>
-        ))}
+    <section className="min-h-screen bg-white px-4 py-10 max-w-6xl mx-auto text-gray-800">
+      <div className="text-center mb-10">
+        <h1 className="text-4xl font-extrabold text-[#4A4B83] mb-2">Olá, {user.name} 👋</h1>
+        <p className="text-gray-500 text-base">Veja os jogos que você já avaliou</p>
       </div>
+
+      {loading && (
+        <p className="text-center text-gray-600">Carregando avaliações...</p>
+      )}
+
+      {message && (
+        <div className="text-center text-red-600 mb-4">{message}</div>
+      )}
+
+      {!loading && jogosAvaliados.length === 0 && (
+        <p className="text-center text-gray-600">Você ainda não avaliou nenhum jogo.</p>
+      )}
+
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {jogosAvaliados.map(jogo => (
+          <li
+            key={jogo.idJogo}
+            className="bg-white border border-gray-200 rounded-2xl shadow hover:shadow-md transition duration-200 overflow-hidden flex flex-col"
+          >
+            <img
+              src={jogo.img}
+              alt={jogo.titulo}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4 flex flex-col flex-1">
+              <h3 className="text-xl font-semibold text-[#4A4B83] mb-2">{jogo.titulo}</h3>
+              <p className="text-sm text-gray-600 flex-grow">{jogo.descricao}</p>
+              <div className="mt-4">
+                <span className="inline-block bg-[#4A4B83] text-white text-sm px-3 py-1 rounded-full">
+                  Nota: {jogo.rating}
+                </span>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

@@ -18,7 +18,6 @@ export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    // Pega o Google ID Token corretamente
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const idToken = credential?.idToken;
 
@@ -26,38 +25,44 @@ export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
       throw new Error("Não foi possível obter o ID Token do Google.");
     }
 
-    console.log("Token do Google a ser enviado:", idToken);
-
-    const backendResponse = await fetch("http://localhost:8080/auth/google", {
+    const backendResponse = await fetch("https://apigamefriends.onrender.com/auth/google", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken }),
     });
 
-    console.log("Resposta backend:", backendResponse.status);
-
-    const backendToken = await backendResponse.text();
     if (!backendResponse.ok) {
-      throw new Error(backendToken || "Erro na autenticação com o backend.");
+      const errorText = await backendResponse.text();
+      throw new Error(errorText || "Erro na autenticação com o backend.");
     }
 
+    const backendToken = await backendResponse.text();
     localStorage.setItem("token", backendToken);
+
+    // Aqui você precisaria buscar os dados do usuário, incluindo roles
+    const userResponse = await fetch("https://apigamefriends.onrender.com/auth/Usuario-logado", {
+      headers: { Authorization: `Bearer ${backendToken}` },
+    });
+
+    if (!userResponse.ok) {
+      throw new Error("Erro ao obter dados do usuário.");
+    }
+
+    const userData = await userResponse.json();
 
     dispatch(
       setUser({
-        name: user.displayName || "",
-        email: user.email || "",
+        name: userData.login || user.displayName || "",
+        email: userData.email || user.email || "",
         photo: user.photoURL || "",
+        roles: userData.roles || [],
       })
     );
 
-    // Buscar favoritos (opcional)
-    if (user.email) {
-      const res = await fetch(`/api/favorites?userId=${user.email}`);
-      const data = await res.json();
-      if (data.favorites) {
-        dispatch(setFavorites(data.favorites));
-      }
+    if (userData.email) {
+      const favRes = await fetch(`/api/favorites?userId=${userData.email}`);
+      const favData = await favRes.json();
+      dispatch(setFavorites(favData.favorites || []));
     }
   } catch (error) {
     console.error("Erro no login com Google:", error);
@@ -71,7 +76,7 @@ export const loginWithCredentials = (username: string, password: string) => asyn
   try {
     dispatch(setLoading(true));
 
-    const loginResponse = await fetch("http://localhost:8080/auth", {
+    const loginResponse = await fetch("https://apigamefriends.onrender.com/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ login: username, senha: password }),
@@ -87,9 +92,13 @@ export const loginWithCredentials = (username: string, password: string) => asyn
 
     localStorage.setItem("token", token);
 
-    const userResponse = await fetch("http://localhost:8080/auth/Usuario-logado", {
+    const userResponse = await fetch("https://apigamefriends.onrender.com/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${token}` },
     });
+
+    if (!userResponse.ok) {
+      throw new Error("Erro ao obter dados do usuário.");
+    }
 
     const user = await userResponse.json();
 
@@ -98,6 +107,7 @@ export const loginWithCredentials = (username: string, password: string) => asyn
         name: user.login,
         email: user.email,
         photo: "",
+        roles: user.roles || [],
       })
     );
 
@@ -118,7 +128,7 @@ export const loginWithCredentials = (username: string, password: string) => asyn
 export const logoutUser = () => async (dispatch: AppDispatch) => {
   try {
     await firebaseSignout(auth);
-    localStorage.removeItem("token"); // Remove token do backend
+    localStorage.removeItem("token");
     dispatch(logout());
   } catch (error) {
     console.error("Erro ao fazer logout:", error);
@@ -132,7 +142,7 @@ export const restoreSession = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(true));
 
-    const response = await fetch("http://localhost:8080/auth/Usuario-logado", {
+    const response = await fetch("https://apigamefriends.onrender.com/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -145,6 +155,7 @@ export const restoreSession = () => async (dispatch: AppDispatch) => {
         name: user.login,
         email: user.email,
         photo: "",
+        roles: user.roles || [],
       })
     );
 
@@ -154,7 +165,7 @@ export const restoreSession = () => async (dispatch: AppDispatch) => {
   } catch (err) {
     console.error("Erro ao restaurar sessão:", err);
     localStorage.removeItem("token");
-    dispatch(logout()); 
+    dispatch(logout());
   } finally {
     dispatch(setLoading(false));
   }

@@ -10,7 +10,7 @@ export interface CommonCardProp {
 }
 
 export interface CardProp extends CommonCardProp {
-  id: number;
+  id: string;
 }
 
 export interface CommonImageProp {
@@ -22,6 +22,7 @@ export interface User {
   name: string | null;
   email: string | null;
   photo: string | null;
+  roles: string[] | null;
 }
 
 export interface GamePayload {
@@ -49,13 +50,4 @@ export interface GamePayloadUpdate extends GamePayload {
 export interface ReviewPayload {
   idJogo: number;
   rating: number;
-}
-
-export interface ReviewPayloadReturn extends ReviewPayload {
-  idUsuario: number;
-}
-
-export interface FavoritePayload {
-  idJogo: number;
-  favorito: boolean;
 }
