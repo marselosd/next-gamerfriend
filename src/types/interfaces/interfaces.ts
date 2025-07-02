@@ -46,8 +46,16 @@ export interface GamePayloadUpdate extends GamePayload {
   totalRating: number;
 }
 
-
 export interface ReviewPayload {
   idJogo: number;
   rating: number;
+}
+
+export interface ReviewPayloadReturn extends ReviewPayload {
+  idUsuario: number;
+}
+
+export interface FavoritePayload {
+  idJogo: number;
+  favorito: boolean;
 }
