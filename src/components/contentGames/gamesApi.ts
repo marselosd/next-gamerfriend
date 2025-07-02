@@ -24,8 +24,8 @@ export const gamerFriendApi = createApi({
         return `jogos?${params.toString()}`;
       },
     }),
-    getGame: builder.query<GamePayloadReturn , {gameId: number}>({
-      query: ({gameId}) => `jogos/${gameId}`,
+    getGame: builder.query<GamePayloadReturn , {id: number}>({
+      query: ({id}) => `jogos/${id}`,
     }),
     addGame: builder.mutation<GamePayloadReturn, GamePayload> ({
       query: (newGame) => ({

@@ -35,7 +35,7 @@ export interface GamePayload {
 }
 
 export interface GamePayloadReturn extends GamePayload {
-  id: number,
+  idJogo: number,
   avgRating: number;
   totalRating: number;
 }

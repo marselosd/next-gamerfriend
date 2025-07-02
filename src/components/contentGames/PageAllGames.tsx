@@ -1,17 +1,10 @@
 'use client';
 import React, { useState } from "react";
 import CardShareFav from "../commonCard/CardShareFav";
-import { getTranslations } from "@/locales";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { useGetGamesQuery } from "./gamesApi";
 import { GamePayloadReturn } from "@/types/interfaces/interfaces";
 
-export default function GamesContent() {
-  const currentLanguage = useSelector(
-    (state: RootState) => state.language.currentLanguage
-  );
-  const { cardGames } = getTranslations(currentLanguage);
+export default function PageAllGames() {
 
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(21);
@@ -70,19 +63,18 @@ export default function GamesContent() {
           {!isLoading &&
             !error &&
             data?.map((game: GamePayloadReturn) => (
-              <CardShareFav
-                key={game.id}
-                id={game.id}
-                cardName={String(game.anoLancamento)}
-                tittle={game.titulo}
-                img={{
-                  image: game.img,
-                  alt: game.titulo,
-                }}
-                avgRating={game.avgRating}
-              >
-                {game.descricao}
-              </CardShareFav>
+                <CardShareFav
+                  id={game.idJogo}
+                  cardName={String(game.anoLancamento)}
+                  tittle={game.titulo}
+                  img={{
+                    image: game.img,
+                    alt: game.titulo,
+                  }}
+                  avgRating={game.avgRating}
+                >
+                  {game.descricao}
+                </CardShareFav>
             ))}
         </div>
       </section>
