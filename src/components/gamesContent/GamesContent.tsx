@@ -15,25 +15,25 @@ export default function GamesContent() {
 
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(21);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
+  const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState("");
 
   const { data, error, isLoading } = useGetGamesQuery({
     page,
     size,
-    search: searchTerm,
-    sort: sortOrder,
+    filter: filter,
+    search: search,
   });
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setPage(1);
+    setPage(0);
     setSize(21);
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOrder(e.target.value);
-    setPage(1);
+    setFilter(e.target.value);
+    setPage(0);
     setSize(21);
   };
 
@@ -45,21 +45,20 @@ export default function GamesContent() {
           <input
             type="text"
             placeholder="Buscar por nome..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
             className="border border-gray-300 rounded-md px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#6667AB]"
           />
         </form>
 
         <select
-          value={sortOrder}
+          value={filter}
           onChange={handleSortChange}
           className="border border-gray-300 rounded-md px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6667AB]"
         >
           <option value="">Ordenar por...</option>
-          <option value="original_release_date:desc">Mais Recentes</option>
-          <option value="name:asc">Nome (A-Z)</option>
-          <option value="name:desc">Nome (Z-A)</option>
+          <option value="anoLancamento">Mais Antigos</option>
+          <option value="titulo">Nome (A-Z)</option>
+          <option value="avgRating">Nota (Média)</option>
         </select>
       </section>
 
@@ -74,12 +73,13 @@ export default function GamesContent() {
               <CardShareFav
                 key={game.id}
                 id={game.id}
-                cardName={cardGames.title}
+                cardName={String(game.anoLancamento)}
                 tittle={game.titulo}
                 img={{
                   image: game.img,
                   alt: game.titulo,
                 }}
+                avgRating={game.avgRating}
               >
                 {game.descricao}
               </CardShareFav>
@@ -90,16 +90,16 @@ export default function GamesContent() {
       {/* Paginação */}
       <section className="flex justify-center items-center gap-4 mt-8">
         <button
-          onClick={() => setPage((p) => Math.max(p - 1, 1))}
-          disabled={page === 1}
+          onClick={() => setPage((p) => Math.max(p - 1, 0))}
+          disabled={page === 0}
           className="px-4 py-2 bg-[#6667AB] text-white rounded-md disabled:opacity-50 hover:bg-[#57599c] transition-colors"
         >
           Anterior
         </button>
-        <span className="text-sm font-medium">Página {page}</span>
+        <span className="text-sm font-medium">Página {page + 1}</span>
         <button
           onClick={() => setPage((p) => p + 1)}
-          disabled={!data?.length || data.length < 20}
+          disabled={!data?.length || data.length < size}
           className="px-4 py-2 bg-[#6667AB] text-white rounded-md disabled:opacity-50 hover:bg-[#57599c] transition-colors"
         >
           Próximo
