@@ -66,6 +66,7 @@ export default function PageAllGames() {
                 id={String(game.idJogo)}
                 cardName={String(game.anoLancamento)}
                 tittle={game.titulo}
+                key={game.idJogo}
                 img={{
                   image: game.img,
                   alt: game.titulo,

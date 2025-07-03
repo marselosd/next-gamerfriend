@@ -81,6 +81,7 @@ export default function FavoriteButton({ gameId }: FavoriteButtonProps) {
       refetch();
     } catch (error) {
       // Se falhar, mostra o input embutido para avaliar antes de favoritar
+      console.log(error);
       setShowRatingInput(true);
     }
   };

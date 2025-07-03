@@ -2,16 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
-
-interface JogoAvaliado {
-  idJogo: number;
-  titulo: string;
-  descricao: string;
-  img: string;
-  rating: number;
-}
+import { GamePayloadReturn, ReviewPayloadReturn } from "@/types/interfaces/interfaces";
 
 const BASE_URL = "http://localhost:8080";
+
+interface JogoAvaliado extends GamePayloadReturn {
+  rating: number;
+}
 
 export default function ProfileContent() {
   const user = useAppSelector(state => state.auth.user);
@@ -41,22 +38,30 @@ export default function ProfileContent() {
 
       if (!resReview.ok || !resJogos.ok) throw new Error("Erro ao carregar dados");
 
-      const reviews = await resReview.json(); 
-      const jogos = await resJogos.json();     
-      const avaliados: JogoAvaliado[] = reviews.map((r: any) => {
-        const jogo = jogos.find((j: any) => j.idJogo === r.idJogo);
+      const reviews = await resReview.json() as ReviewPayloadReturn[];
+      const jogos = await resJogos.json() as GamePayloadReturn[];
+
+      const avaliados: JogoAvaliado[] = reviews.map((r) => {
+        const jogo = jogos.find((j) => j.idJogo === r.idJogo);
         return {
           idJogo: r.idJogo,
           titulo: jogo?.titulo || `Jogo ID ${r.idJogo}`,
           descricao: jogo?.descricao || '',
           img: jogo?.img || '',
           rating: r.rating,
+          avgRating: jogo?.avgRating ?? 0,
+          anoLancamento: jogo?.anoLancamento ?? 0,
+          genero: jogo?.genero ?? [],
+          plataformas: jogo?.plataformas ?? [],
+          produtora: jogo?.produtora ?? '',
+          totalRating: jogo?.totalRating ?? 0,
         };
       });
 
       setJogosAvaliados(avaliados);
-    } catch (err: any) {
-      setMessage(err.message || "Erro ao carregar avaliações");
+    } catch (err: unknown) {
+      const error = err as Error;
+      setMessage(error.message || "Erro ao carregar avaliações");
     } finally {
       setLoading(false);
     }
