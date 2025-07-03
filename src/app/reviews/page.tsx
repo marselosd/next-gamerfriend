@@ -26,9 +26,9 @@ export default function ReviewPage() {
   const [selectedJogo, setSelectedJogo] = useState<Jogo | null>(null);
   const [rating, setRating] = useState<number>(0);
   const [message, setMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const [pageAvaliados, setPageAvaliados] = useState(1);
   const [pageNaoAvaliados, setPageNaoAvaliados] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const jogosAvaliados: Jogo[] = jogosAvaliadosRaw.map((review) => {
     const jogoDetalhes = todosJogos.find((j) => j.idJogo === review.idJogo);
@@ -42,24 +42,24 @@ export default function ReviewPage() {
     };
   });
 
-  const totalPaginasAvaliados = Math.ceil(
-    jogosAvaliados.length / ITEMS_PER_PAGE
-  );
-  const totalPaginasNaoAvaliados = Math.ceil(
-    todosJogos.filter((j) => !jogosAvaliados.find((a) => a.idJogo === j.idJogo))
-      .length / ITEMS_PER_PAGE
+  const jogosNaoAvaliadosFiltrados = todosJogos.filter(
+    (j) =>
+      !jogosAvaliados.find((a) => a.idJogo === j.idJogo) &&
+      j.titulo.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const jogosAvaliadosPaginados = jogosAvaliados.slice(
     (pageAvaliados - 1) * ITEMS_PER_PAGE,
     pageAvaliados * ITEMS_PER_PAGE
   );
-  const jogosNaoAvaliadosPaginados = todosJogos
-    .filter((j) => !jogosAvaliados.find((a) => a.idJogo === j.idJogo))
-    .slice(
-      (pageNaoAvaliados - 1) * ITEMS_PER_PAGE,
-      pageNaoAvaliados * ITEMS_PER_PAGE
-    );
+
+  const jogosNaoAvaliadosPaginados = jogosNaoAvaliadosFiltrados.slice(
+    (pageNaoAvaliados - 1) * ITEMS_PER_PAGE,
+    pageNaoAvaliados * ITEMS_PER_PAGE
+  );
+
+  const totalPaginasAvaliados = Math.ceil(jogosAvaliados.length / ITEMS_PER_PAGE);
+  const totalPaginasNaoAvaliados = Math.ceil(jogosNaoAvaliadosFiltrados.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
     const tk = localStorage.getItem("token");
@@ -109,9 +109,7 @@ export default function ReviewPage() {
 
     try {
       const body = { idJogo: selectedJogo.idJogo, rating };
-      const existing = jogosAvaliados.find(
-        (j) => j.idJogo === selectedJogo.idJogo
-      );
+      const existing = jogosAvaliados.find((j) => j.idJogo === selectedJogo.idJogo);
 
       const res = await fetch(`${BASE_URL}/jogos/review`, {
         method: existing ? "PUT" : "POST",
@@ -185,10 +183,8 @@ export default function ReviewPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className=" px-4 py-10 max-w-4xl mx-auto text-gray-800">
-        <h1 className="text-3xl font-bold text-center mb-8">
-          Minhas Avaliações
-        </h1>
+      <div className="px-4 py-10 max-w-4xl mx-auto text-gray-800">
+        <h1 className="text-3xl font-bold text-center mb-8">Minhas Avaliações</h1>
 
         {message && <p className="text-red-600 text-center mb-4">{message}</p>}
 
@@ -235,9 +231,17 @@ export default function ReviewPage() {
 
         {/* Não avaliados */}
         <section>
-          <h2 className="text-xl font-semibold mb-4">
-            Jogos ainda não avaliados
-          </h2>
+          <h2 className="text-xl font-semibold mb-4">Jogos ainda não avaliados</h2>
+          <input
+            type="text"
+            placeholder="Buscar jogo por nome..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setPageNaoAvaliados(1);
+            }}
+            className="mb-4 w-full px-4 py-2 border rounded-md shadow-sm border-gray-300 text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
+          />
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {jogosNaoAvaliadosPaginados.map((jogo) => (
               <li
@@ -307,9 +311,7 @@ export default function ReviewPage() {
                     onClick={handleReviewSubmit}
                     className="bg-[#4A4B83] hover:bg-[#353660] text-white px-4 py-2 rounded"
                   >
-                    {jogosAvaliados.find(
-                      (j) => j.idJogo === selectedJogo.idJogo
-                    )
+                    {jogosAvaliados.find((j) => j.idJogo === selectedJogo.idJogo)
                       ? "Atualizar"
                       : "Enviar"}
                   </button>
