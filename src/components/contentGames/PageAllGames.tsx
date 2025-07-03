@@ -1,11 +1,10 @@
-'use client';
+"use client";
 import React, { useState } from "react";
 import CardShareFav from "../commonCard/CardShareFav";
 import { useGetGamesQuery } from "./gamesApi";
 import { GamePayloadReturn } from "@/types/interfaces/interfaces";
 
 export default function PageAllGames() {
-
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(21);
   const [filter, setFilter] = useState("");
@@ -63,18 +62,18 @@ export default function PageAllGames() {
           {!isLoading &&
             !error &&
             data?.map((game: GamePayloadReturn) => (
-                <CardShareFav
-                  id={game.idJogo}
-                  cardName={String(game.anoLancamento)}
-                  tittle={game.titulo}
-                  img={{
-                    image: game.img,
-                    alt: game.titulo,
-                  }}
-                  avgRating={game.avgRating}
-                >
-                  {game.descricao}
-                </CardShareFav>
+              <CardShareFav
+                id={String(game.idJogo)}
+                cardName={String(game.anoLancamento)}
+                tittle={game.titulo}
+                img={{
+                  image: game.img,
+                  alt: game.titulo,
+                }}
+                avgRating={game.avgRating}
+              >
+                {game.descricao}
+              </CardShareFav>
             ))}
         </div>
       </section>
