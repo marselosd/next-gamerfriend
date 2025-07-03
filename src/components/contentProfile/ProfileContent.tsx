@@ -11,7 +11,7 @@ interface JogoAvaliado {
   rating: number;
 }
 
-const BASE_URL = "https://apigamefriends.onrender.com";
+const BASE_URL = "http://localhost:8080";
 
 export default function ProfileContent() {
   const user = useAppSelector(state => state.auth.user);
