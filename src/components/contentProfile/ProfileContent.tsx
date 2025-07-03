@@ -1,30 +1,24 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
-import { useAppSelector } from "@/redux/hooks";
-import { GamePayloadReturn, ReviewPayloadReturn } from "@/types/interfaces/interfaces";
+import React, { useEffect, useState, useCallback } from 'react';
+import { useAppSelector } from '@/redux/hooks';
+import { GamePayloadReturn, ReviewPayloadReturn } from '@/types/interfaces/interfaces';
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = 'http://localhost:8080';
 
 interface JogoAvaliado extends GamePayloadReturn {
   rating: number;
 }
 
 export default function ProfileContent() {
-  const user = useAppSelector(state => state.auth.user);
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const user = useAppSelector((state) => state.auth.user);
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   const [jogosAvaliados, setJogosAvaliados] = useState<JogoAvaliado[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (token && user) {
-      loadAvaliacoes();
-    }
-  }, [token, user]);
-
-  const loadAvaliacoes = async () => {
+  const loadAvaliacoes = useCallback(async () => {
     setLoading(true);
     try {
       const [resReview, resJogos] = await Promise.all([
@@ -36,10 +30,10 @@ export default function ProfileContent() {
         }),
       ]);
 
-      if (!resReview.ok || !resJogos.ok) throw new Error("Erro ao carregar dados");
+      if (!resReview.ok || !resJogos.ok) throw new Error('Erro ao carregar dados');
 
-      const reviews = await resReview.json() as ReviewPayloadReturn[];
-      const jogos = await resJogos.json() as GamePayloadReturn[];
+      const reviews: ReviewPayloadReturn[] = await resReview.json();
+      const jogos: GamePayloadReturn[] = await resJogos.json();
 
       const avaliados: JogoAvaliado[] = reviews.map((r) => {
         const jogo = jogos.find((j) => j.idJogo === r.idJogo);
@@ -60,12 +54,21 @@ export default function ProfileContent() {
 
       setJogosAvaliados(avaliados);
     } catch (err: unknown) {
-      const error = err as Error;
-      setMessage(error.message || "Erro ao carregar avaliações");
+      if (err instanceof Error) {
+        setMessage(err.message || 'Erro ao carregar avaliações');
+      } else {
+        setMessage('Erro desconhecido ao carregar avaliações.');
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    if (token && user) {
+      loadAvaliacoes();
+    }
+  }, [token, user, loadAvaliacoes]);
 
   if (!user) {
     return (

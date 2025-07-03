@@ -116,9 +116,13 @@ export const loginWithCredentials = (username: string, password: string) => asyn
     dispatch(setFavorites(favData.favorites || []));
 
     return { success: true };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Login com credenciais falhou:", error);
-    return { success: false, message: error };
+    let message = "Erro desconhecido";
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return { success: false, message };
   } finally {
     dispatch(setLoading(false));
   }
