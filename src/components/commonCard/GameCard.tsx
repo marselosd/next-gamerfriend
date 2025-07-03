@@ -1,15 +1,12 @@
 import { CardProp } from "@/types/interfaces/interfaces";
 import React, { useEffect, useState } from "react";
-import CommonFavorite from "../commonFavorite/CommonFavorite";
-import CommonShare from "../commonShare/CommonShare";
-import CommonCard from "./CommonCard";
 import { useAppDispatch } from "@/redux/hooks";
 import { setWindowWidth } from "./WindowSlice";
 import Link from "next/link";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 
-export default function CardShareFav({ cardName, tittle, children, img, avgRating, id}: CardProp) {
+export default function GameCard({img, id}: CardProp) {
     const dispatch = useAppDispatch();
     const [imageUrl, setImageUrl] = useState("");
 

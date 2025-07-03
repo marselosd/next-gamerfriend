@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ProfileContent from "@/components/profileContent/ProfileContent";
+import ProfileContent from "@/components/contentProfile/ProfileContent";
 import SessionGuard from "../SessionGuard";
 import RequireAdmin from "@/components/admin/RequireAdmin";
 

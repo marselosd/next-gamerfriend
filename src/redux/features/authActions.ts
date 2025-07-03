@@ -25,7 +25,7 @@ export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
       throw new Error("Não foi possível obter o ID Token do Google.");
     }
 
-    const backendResponse = await fetch("https://apigamefriends.onrender.com/auth/google", {
+    const backendResponse = await fetch("http://localhost:8080/auth/google", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken }),
@@ -40,7 +40,7 @@ export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
     localStorage.setItem("token", backendToken);
 
     // Aqui você precisaria buscar os dados do usuário, incluindo roles
-    const userResponse = await fetch("https://apigamefriends.onrender.com/auth/Usuario-logado", {
+    const userResponse = await fetch("http://localhost:8080/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${backendToken}` },
     });
 
@@ -76,7 +76,7 @@ export const loginWithCredentials = (username: string, password: string) => asyn
   try {
     dispatch(setLoading(true));
 
-    const loginResponse = await fetch("https://apigamefriends.onrender.com/auth", {
+    const loginResponse = await fetch("http://localhost:8080/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ login: username, senha: password }),
@@ -92,7 +92,7 @@ export const loginWithCredentials = (username: string, password: string) => asyn
 
     localStorage.setItem("token", token);
 
-    const userResponse = await fetch("https://apigamefriends.onrender.com/auth/Usuario-logado", {
+    const userResponse = await fetch("http://localhost:8080/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -142,7 +142,7 @@ export const restoreSession = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(true));
 
-    const response = await fetch("https://apigamefriends.onrender.com/auth/Usuario-logado", {
+    const response = await fetch("http://localhost:8080/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${token}` },
     });
 

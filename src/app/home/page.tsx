@@ -1,6 +1,6 @@
 import React from "react";
-import CardSection from "@/components/homeContent/CardSection";
-import HeroSection from "@/components/homeContent/HeroSection";
+import CardSection from "@/components/contentHome/CardSection";
+import HeroSection from "@/components/contentHome/HeroSection";
 
 export default function Main() {
     return (

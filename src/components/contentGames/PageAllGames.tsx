@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import CardShareFav from "../commonCard/CardShareFav";
+import GameCard from "../commonCard/GameCard";
 import { useGetGamesQuery } from "./gamesApi";
 import { GamePayloadReturn } from "@/types/interfaces/interfaces";
 
@@ -62,7 +62,7 @@ export default function PageAllGames() {
           {!isLoading &&
             !error &&
             data?.map((game: GamePayloadReturn) => (
-              <CardShareFav
+              <GameCard
                 id={String(game.idJogo)}
                 cardName={String(game.anoLancamento)}
                 tittle={game.titulo}
@@ -73,7 +73,7 @@ export default function PageAllGames() {
                 avgRating={game.avgRating}
               >
                 {game.descricao}
-              </CardShareFav>
+              </GameCard>
             ))}
         </div>
       </section>
