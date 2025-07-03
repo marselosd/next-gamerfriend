@@ -1,6 +1,6 @@
 'use client'
 
-import Providers from "@/components/Providers";
+import Providers from "@/app/Providers";
 import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
 
