@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { GamePayloadReturn, ReviewPayloadReturn } from '@/types/interfaces/interfaces';
 
-const BASE_URL = 'http://https://apigamefriends.onrender.com';
+const BASE_URL = 'https://apigamefriends.onrender.com';
 
 interface JogoAvaliado extends GamePayloadReturn {
   rating: number;
