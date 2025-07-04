@@ -65,8 +65,9 @@ export default function FavoriteButton({ gameId }: FavoriteButtonProps) {
       setShowRatingInput(false);
       setErrorMsg(null);
       refetch();
-    } catch (err: any) {
-      setErrorMsg(err.message || "Erro ao favoritar com fallback");
+    } catch (err) {
+      console.log(err);
+      setErrorMsg("Erro ao favoritar com fallback");
     }
   };
 

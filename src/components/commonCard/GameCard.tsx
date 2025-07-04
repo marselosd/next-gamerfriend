@@ -8,7 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 
 export default function GameCard({img, id}: CardProp) {
     const dispatch = useAppDispatch();
-    const [_, setImageUrl] = useState("");
+    const [, setImageUrl] = useState("");
 
     useEffect(() => {
         if (typeof window !== "undefined") {

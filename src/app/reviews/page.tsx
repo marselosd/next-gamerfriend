@@ -84,8 +84,9 @@ export default function ReviewPage() {
       if (!res.ok) throw new Error("Erro ao buscar jogos avaliados");
       const data: Review[] = await res.json();
       setJogosAvaliadosRaw(data);
-    } catch (err: any) {
-      setMessage(err.message || "Erro ao carregar avaliações");
+    } catch (err) {
+      console.log(err)
+      setMessage("Erro ao carregar avaliações");
     }
   };
 
@@ -97,8 +98,8 @@ export default function ReviewPage() {
       if (!res.ok) throw new Error("Erro ao buscar jogos");
       const data: Jogo[] = await res.json();
       setTodosJogos(data);
-    } catch (err: any) {
-      setMessage(err.message || "Erro ao carregar jogos");
+    } catch (err) {
+      setMessage("Erro ao carregar jogos");
     }
   };
 
@@ -129,8 +130,9 @@ export default function ReviewPage() {
       setSelectedJogo(null);
       setRating(0);
       await loadJogosAvaliados();
-    } catch (err: any) {
-      setMessage(err.message || "Erro ao enviar avaliação");
+    } catch (err) {
+      console.log(err);
+      setMessage("Erro ao enviar avaliação");
     }
   };
 

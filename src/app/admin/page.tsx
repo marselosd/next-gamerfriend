@@ -71,8 +71,9 @@ export default function AdminPage() {
 
       const data = await res.json();
       setJogos(data);
-    } catch (err: any) {
-      setError(err.message || 'Erro ao carregar jogos');
+    } catch (err) {
+      console.log(err);
+      setError('Erro ao carregar jogos');
     } finally {
       setLoading(false);
     }
@@ -130,8 +131,9 @@ export default function AdminPage() {
       });
       setEditId(null);
       await loadJogos();
-    } catch (err: any) {
-      setError(err.message || 'Erro desconhecido ao salvar jogo');
+    } catch (err) {
+      console.log(err);
+      setError('Erro desconhecido ao salvar jogo');
     } finally {
       setLoading(false);
     }
@@ -164,8 +166,9 @@ export default function AdminPage() {
       if (!res.ok) throw new Error('Erro ao deletar');
 
       await loadJogos();
-    } catch (err: any) {
-      setError(err.message || 'Erro ao deletar jogo');
+    } catch (err) {
+      console.log(err);
+      setError('Erro ao deletar jogo');
     } finally {
       setLoading(false);
     }
