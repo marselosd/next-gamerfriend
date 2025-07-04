@@ -12,7 +12,7 @@ interface FavoriteButtonProps {
   gameId: number;
 }
 
-const BASE_URL = "http://https://apigamefriends.onrender.com";
+const BASE_URL = "https://apigamefriends.onrender.com";
 
 export default function FavoriteButton({ gameId }: FavoriteButtonProps) {
   const { data: favoriteData, isLoading, refetch } = useGetFavoriteQuery({
