@@ -56,7 +56,7 @@ Interface web da plataforma **GameFriends**, desenvolvida em **Next.js** com **R
 3. Configure as variáveis de ambiente no arquivo .env.local:
 
     ```bash
-    NEXT_PUBLIC_API_URL=http://localhost:8080
+    NEXT_PUBLIC_API_URL=http://https://apigamefriends.onrender.com
     NEXT_PUBLIC_FIREBASE_API_KEY=...
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
 
