@@ -25,7 +25,7 @@ export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
       throw new Error("Não foi possível obter o ID Token do Google.");
     }
 
-    const backendResponse = await fetch("http://localhost:8080/auth/google", {
+    const backendResponse = await fetch("http://https://apigamefriends.onrender.com/auth/google", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken }),
@@ -40,7 +40,7 @@ export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
     localStorage.setItem("token", backendToken);
 
     // Aqui você precisaria buscar os dados do usuário, incluindo roles
-    const userResponse = await fetch("http://localhost:8080/auth/Usuario-logado", {
+    const userResponse = await fetch("http://https://apigamefriends.onrender.com/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${backendToken}` },
     });
 
@@ -76,7 +76,7 @@ export const loginWithCredentials = (username: string, password: string) => asyn
   try {
     dispatch(setLoading(true));
 
-    const loginResponse = await fetch("http://localhost:8080/auth", {
+    const loginResponse = await fetch("http://https://apigamefriends.onrender.com/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ login: username, senha: password }),
@@ -92,7 +92,7 @@ export const loginWithCredentials = (username: string, password: string) => asyn
 
     localStorage.setItem("token", token);
 
-    const userResponse = await fetch("http://localhost:8080/auth/Usuario-logado", {
+    const userResponse = await fetch("http://https://apigamefriends.onrender.com/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -116,9 +116,13 @@ export const loginWithCredentials = (username: string, password: string) => asyn
     dispatch(setFavorites(favData.favorites || []));
 
     return { success: true };
-  } catch (error: any) {
-    console.error("Login com credenciais falhou:", error.message);
-    return { success: false, message: error.message };
+  } catch (error: unknown) {
+    console.error("Login com credenciais falhou:", error);
+    let message = "Erro desconhecido";
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return { success: false, message };
   } finally {
     dispatch(setLoading(false));
   }
@@ -142,7 +146,7 @@ export const restoreSession = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(true));
 
-    const response = await fetch("http://localhost:8080/auth/Usuario-logado", {
+    const response = await fetch("http://https://apigamefriends.onrender.com/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${token}` },
     });
 

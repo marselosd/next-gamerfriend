@@ -13,8 +13,8 @@ export default function PageAllGames() {
   const { data, error, isLoading } = useGetGamesQuery({
     page,
     size,
-    filter: filter,
-    search: search,
+    filter,
+    search,
   });
 
   const handleSearch = (e: React.FormEvent) => {
@@ -62,18 +62,20 @@ export default function PageAllGames() {
           {!isLoading &&
             !error &&
             data?.map((game: GamePayloadReturn) => (
-              <GameCard
-                id={String(game.idJogo)}
-                cardName={String(game.anoLancamento)}
-                tittle={game.titulo}
-                img={{
-                  image: game.img,
-                  alt: game.titulo,
-                }}
-                avgRating={game.avgRating}
-              >
-                {game.descricao}
-              </GameCard>
+              <div key={game.idJogo}>
+                <GameCard
+                  id={String(game.idJogo)}
+                  cardName={String(game.anoLancamento)}
+                  tittle={game.titulo}
+                  img={{
+                    image: game.img,
+                    alt: game.titulo,
+                  }}
+                  avgRating={game.avgRating}
+                >
+                  {game.descricao}
+                </GameCard>
+              </div>
             ))}
         </div>
       </section>

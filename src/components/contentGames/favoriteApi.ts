@@ -4,7 +4,7 @@ import { FavoritePayload, GamePayloadReturn } from "@/types/interfaces/interface
 export const favoriteApi = createApi({
   reducerPath: 'favoriteApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: 'http://https://apigamefriends.onrender.com/',
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('token');
       if (token) {

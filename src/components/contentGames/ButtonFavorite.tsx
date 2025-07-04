@@ -12,7 +12,7 @@ interface FavoriteButtonProps {
   gameId: number;
 }
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://https://apigamefriends.onrender.com";
 
 export default function FavoriteButton({ gameId }: FavoriteButtonProps) {
   const { data: favoriteData, isLoading, refetch } = useGetFavoriteQuery({
@@ -65,8 +65,9 @@ export default function FavoriteButton({ gameId }: FavoriteButtonProps) {
       setShowRatingInput(false);
       setErrorMsg(null);
       refetch();
-    } catch (err: any) {
-      setErrorMsg(err.message || "Erro ao favoritar com fallback");
+    } catch (err) {
+      console.log(err);
+      setErrorMsg("Erro ao favoritar com fallback");
     }
   };
 
@@ -81,6 +82,7 @@ export default function FavoriteButton({ gameId }: FavoriteButtonProps) {
       refetch();
     } catch (error) {
       // Se falhar, mostra o input embutido para avaliar antes de favoritar
+      console.log(error);
       setShowRatingInput(true);
     }
   };

@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const gamerFriendApi = createApi({
   reducerPath: 'gamerfriendApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/", 
+    baseUrl: "http://https://apigamefriends.onrender.com/", 
     prepareHeaders: (headers) => {
     const token = localStorage.getItem('token');
     if (token) {

@@ -9,6 +9,7 @@ import { getTranslations } from "@/locales"
 import { ThunkDispatch } from "@reduxjs/toolkit"
 
 export default function LoginPage() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useAppDispatch() as ThunkDispatch<any, any, any>
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
   const { loginPage: t } = getTranslations(currentLanguage)
