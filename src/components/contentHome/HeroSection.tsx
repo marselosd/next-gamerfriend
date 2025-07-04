@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { getTranslations } from '@/locales'
 import { Container, Box, Typography } from '@mui/material'
+import logo from "@/app/logo.png"
 
 export default function HeroSection() {
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
@@ -19,6 +20,9 @@ export default function HeroSection() {
       }}
     >
       <Container maxWidth="md">
+        <div className="flex items-center justify-center w-full h-64">
+          <img src={logo.src} alt="Logo" width={200} height={200} />
+        </div>
         <Typography variant="h2" component="h1" gutterBottom>
           {hero.title}
         </Typography>
