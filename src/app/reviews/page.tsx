@@ -99,6 +99,7 @@ export default function ReviewPage() {
       const data: Jogo[] = await res.json();
       setTodosJogos(data);
     } catch (err) {
+      console.log(err);
       setMessage("Erro ao carregar jogos");
     }
   };
