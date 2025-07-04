@@ -61,8 +61,12 @@ export default function ReviewPage() {
     pageNaoAvaliados * ITEMS_PER_PAGE
   );
 
-  const totalPaginasAvaliados = Math.ceil(jogosAvaliados.length / ITEMS_PER_PAGE);
-  const totalPaginasNaoAvaliados = Math.ceil(jogosNaoAvaliadosFiltrados.length / ITEMS_PER_PAGE);
+  const totalPaginasAvaliados = Math.ceil(
+    jogosAvaliados.length / ITEMS_PER_PAGE
+  );
+  const totalPaginasNaoAvaliados = Math.ceil(
+    jogosNaoAvaliadosFiltrados.length / ITEMS_PER_PAGE
+  );
 
   useEffect(() => {
     const tk = localStorage.getItem("token");
@@ -85,7 +89,7 @@ export default function ReviewPage() {
       const data: Review[] = await res.json();
       setJogosAvaliadosRaw(data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setMessage("Erro ao carregar avaliações");
     }
   };
@@ -107,14 +111,26 @@ export default function ReviewPage() {
   const handleReviewSubmit = async () => {
     if (!token || !selectedJogo) return;
 
-    if (rating < 0 || rating > 10) {
-      setMessage("A nota deve ser entre 0 e 10.");
+    const parsedRating = parseFloat(rating.toString());
+
+    if (
+      !Number.isFinite(parsedRating) ||
+      parsedRating < 0 ||
+      parsedRating > 10
+    ) {
+      setMessage("A nota deve ser um número entre 0 e 10.");
       return;
     }
 
     try {
-      const body = { idJogo: selectedJogo.idJogo, rating };
-      const existing = jogosAvaliados.find((j) => j.idJogo === selectedJogo.idJogo);
+      const body = {
+        idJogo: selectedJogo.idJogo,
+        rating: parsedRating,
+      };
+
+      const existing = jogosAvaliados.find(
+        (j) => j.idJogo === selectedJogo.idJogo
+      );
 
       const res = await fetch(`${BASE_URL}/jogos/review`, {
         method: existing ? "PUT" : "POST",
@@ -125,14 +141,18 @@ export default function ReviewPage() {
         body: JSON.stringify(body),
       });
 
-      if (!res.ok) throw new Error(await res.text());
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Erro do backend:", errorText);
+        throw new Error(errorText || "Erro ao enviar avaliação.");
+      }
 
       setMessage(existing ? "Avaliação atualizada!" : "Avaliação enviada!");
       setSelectedJogo(null);
       setRating(0);
       await loadJogosAvaliados();
     } catch (err) {
-      console.log(err);
+      console.error("Erro ao enviar avaliação:", err);
       setMessage("Erro ao enviar avaliação");
     }
   };
@@ -192,7 +212,9 @@ export default function ReviewPage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="px-4 py-10 max-w-4xl mx-auto text-gray-800">
-        <h1 className="text-3xl font-bold text-center mb-8">Minhas Avaliações</h1>
+        <h1 className="text-3xl font-bold text-center mb-8">
+          Minhas Avaliações
+        </h1>
 
         {message && (
           <p className="text-red-600 text-center mb-4" role="alert">
@@ -216,7 +238,9 @@ export default function ReviewPage() {
                 />
                 <div className="flex-1">
                   <h3 className="font-bold text-[#4A4B83]">{jogo.titulo}</h3>
-                  <p className="text-sm text-gray-700 mt-1">Sua nota: {jogo.rating}</p>
+                  <p className="text-sm text-gray-700 mt-1">
+                    Sua nota: {jogo.rating}
+                  </p>
                   <button
                     onClick={() => {
                       setSelectedJogo(jogo);
@@ -241,7 +265,9 @@ export default function ReviewPage() {
 
         {/* Não avaliados */}
         <section>
-          <h2 className="text-xl font-semibold mb-4">Jogos ainda não avaliados</h2>
+          <h2 className="text-xl font-semibold mb-4">
+            Jogos ainda não avaliados
+          </h2>
           <input
             type="text"
             placeholder="Buscar jogo por nome..."
@@ -321,7 +347,10 @@ export default function ReviewPage() {
                 </h2>
 
                 {/* Label e input nota */}
-                <label htmlFor="nota" className="text-sm text-gray-700 font-medium">
+                <label
+                  htmlFor="nota"
+                  className="text-sm text-gray-700 font-medium"
+                >
                   Nota (0 a 10):
                 </label>
                 <input
@@ -342,7 +371,9 @@ export default function ReviewPage() {
                     onClick={handleReviewSubmit}
                     className="bg-[#4A4B83] hover:bg-[#353660] text-white px-5 py-2 rounded font-semibold transition-colors duration-200"
                   >
-                    {jogosAvaliados.find((j) => j.idJogo === selectedJogo.idJogo)
+                    {jogosAvaliados.find(
+                      (j) => j.idJogo === selectedJogo.idJogo
+                    )
                       ? "Atualizar"
                       : "Enviar"}
                   </button>
