@@ -8,6 +8,7 @@ export default function SessionStart() {
     const dispatch = useAppDispatch();
       
         useEffect(() => {
+          console.log("[SessionStart] Restaurando sessão");
           dispatch(restoreSession());
         }, []);
 

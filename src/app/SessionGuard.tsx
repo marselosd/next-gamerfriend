@@ -3,6 +3,7 @@ import { useAppSelector } from '@/redux/hooks';
 
 export default function SessionGuard({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAppSelector((state) => state.auth);
+  console.log("[SessionGuard] Estado atual:", { user, loading });
 
   if (loading) return <p>Carregando sessão...</p>;
 

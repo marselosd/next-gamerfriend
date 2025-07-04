@@ -111,10 +111,6 @@ export const loginWithCredentials = (username: string, password: string) => asyn
       })
     );
 
-    const favRes = await fetch(`/api/favorites?userId=${user.email}`);
-    const favData = await favRes.json();
-    dispatch(setFavorites(favData.favorites || []));
-
     return { success: true };
   } catch (error: unknown) {
     console.error("Login com credenciais falhou:", error);
@@ -141,6 +137,7 @@ export const logoutUser = () => async (dispatch: AppDispatch) => {
 
 export const restoreSession = () => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token");
+  console.log("[restoreSession] Token:", token);
   if (!token) return;
 
   try {
@@ -162,10 +159,8 @@ export const restoreSession = () => async (dispatch: AppDispatch) => {
         roles: user.roles || [],
       })
     );
+    console.log("[restoreSession] Usuário restaurado:", user);
 
-    const favRes = await fetch(`/api/favorites?userId=${user.email}`);
-    const favData = await favRes.json();
-    dispatch(setFavorites(favData.favorites || []));
   } catch (err) {
     console.error("Erro ao restaurar sessão:", err);
     localStorage.removeItem("token");
