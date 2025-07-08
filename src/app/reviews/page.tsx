@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const BASE_URL = "https://apigamefriends.onrender.com";
@@ -231,11 +232,13 @@ export default function ReviewPage() {
                 key={jogo.idJogo}
                 className="border border-gray-200 rounded-lg p-4 shadow-sm bg-white flex gap-4 items-start"
               >
-                <img
-                  src={jogo.img}
-                  alt={jogo.titulo}
-                  className="w-20 h-28 object-cover rounded"
-                />
+                <Link href={`/games/${jogo.idJogo}`} key={jogo.idJogo}>
+                  <img
+                    src={jogo.img}
+                    alt={jogo.titulo}
+                    className="w-20 h-28 object-cover rounded"
+                  />
+                </Link>
                 <div className="flex-1">
                   <h3 className="font-bold text-[#4A4B83]">{jogo.titulo}</h3>
                   <p className="text-sm text-gray-700 mt-1">
@@ -284,11 +287,13 @@ export default function ReviewPage() {
                 key={jogo.idJogo}
                 className="border border-gray-200 rounded-lg p-4 shadow-sm bg-white flex gap-4 items-start"
               >
-                <img
-                  src={jogo.img}
-                  alt={jogo.titulo}
-                  className="w-20 h-28 object-cover rounded"
-                />
+                <Link href={`/games/${jogo.idJogo}`} key={jogo.idJogo}>
+                  <img
+                    src={jogo.img}
+                    alt={jogo.titulo}
+                    className="w-20 h-28 object-cover rounded"
+                  />
+                </Link>
                 <div className="flex-1">
                   <h3 className="font-bold text-[#4A4B83]">{jogo.titulo}</h3>
                   <button
