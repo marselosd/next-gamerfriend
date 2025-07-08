@@ -2,11 +2,13 @@
 
 import { FormEvent, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
 import { getTranslations } from "@/locales"
 
 export default function RegisterPage() {
+  const router = useRouter()
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
   const { registerPage: t } = getTranslations(currentLanguage)
 
@@ -16,7 +18,6 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState("")
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault()
@@ -28,13 +29,12 @@ export default function RegisterPage() {
 
     setError("")
     setLoading(true)
-    setSuccess("")
 
     try {
-      const response = await fetch('https://apigamefriends.onrender.com/auth/register', {
-        method: 'POST',
+      const response = await fetch("https://apigamefriends.onrender.com/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           login: username,
@@ -47,13 +47,10 @@ export default function RegisterPage() {
       if (!response.ok) {
         const data = await response.json()
         setError(data.message || t.registerError)
-      } else {
-        setSuccess(t.success)
-        setEmail("")
-        setUsername("")
-        setPassword("")
-        setConfirmPassword("")
+        return
       }
+      router.push("/login")
+
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : t.connectionError
       setError(errorMessage)
@@ -76,9 +73,9 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300
-                         text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
+              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300 text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
               placeholder={t.emailPlaceholder}
+              disabled={loading}
             />
           </div>
 
@@ -90,9 +87,9 @@ export default function RegisterPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300
-                         text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
+              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300 text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
               placeholder={t.usernamePlaceholder}
+              disabled={loading}
             />
           </div>
 
@@ -104,9 +101,9 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300
-                         text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
+              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300 text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
               placeholder={t.passwordPlaceholder}
+              disabled={loading}
             />
           </div>
 
@@ -118,20 +115,20 @@ export default function RegisterPage() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300
-                         text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
+              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300 text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
               placeholder={t.confirmPasswordPlaceholder}
+              disabled={loading}
             />
           </div>
 
           {error && <p className="text-red-600 text-sm text-center">{error}</p>}
-          {success && <p className="text-green-600 text-sm text-center">{success}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2 px-4 rounded-md text-white transition-colors
-              ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#4A4B83] hover:bg-[#353660]"}`}
+            className={`w-full py-2 px-4 rounded-md text-white transition-colors ${
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#4A4B83] hover:bg-[#353660]"
+            }`}
           >
             {loading ? t.loadingButton : t.registerButton}
           </button>

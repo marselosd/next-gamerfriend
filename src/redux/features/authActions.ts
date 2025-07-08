@@ -10,7 +10,7 @@ import { AppDispatch } from "../store";
 import { browserLocalPersistence, setPersistence } from "firebase/auth";
 
 // Login com Google usando Google ID Token
-export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
+export const loginWithGoogle = () => async (dispatch: AppDispatch): Promise<boolean> => {
   try {
     dispatch(setLoading(true));
     await setPersistence(auth, browserLocalPersistence);
@@ -21,9 +21,7 @@ export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const idToken = credential?.idToken;
 
-    if (!idToken) {
-      throw new Error("Não foi possível obter o ID Token do Google.");
-    }
+    if (!idToken) throw new Error("Não foi possível obter o ID Token do Google.");
 
     const backendResponse = await fetch("https://apigamefriends.onrender.com/auth/google", {
       method: "POST",
@@ -39,33 +37,31 @@ export const loginWithGoogle = () => async (dispatch: AppDispatch) => {
     const backendToken = await backendResponse.text();
     localStorage.setItem("token", backendToken);
 
-    // Aqui você precisaria buscar os dados do usuário, incluindo roles
     const userResponse = await fetch("https://apigamefriends.onrender.com/auth/Usuario-logado", {
       headers: { Authorization: `Bearer ${backendToken}` },
     });
 
-    if (!userResponse.ok) {
-      throw new Error("Erro ao obter dados do usuário.");
-    }
+    if (!userResponse.ok) throw new Error("Erro ao obter dados do usuário.");
 
     const userData = await userResponse.json();
 
-    dispatch(
-      setUser({
-        name: userData.login || user.displayName || "",
-        email: userData.email || user.email || "",
-        photo: user.photoURL || "",
-        roles: userData.roles || [],
-      })
-    );
+    dispatch(setUser({
+      name: userData.login || user.displayName || "",
+      email: userData.email || user.email || "",
+      photo: user.photoURL || "",
+      roles: userData.roles || [],
+    }));
 
     if (userData.email) {
       const favRes = await fetch(`/api/favorites?userId=${userData.email}`);
       const favData = await favRes.json();
       dispatch(setFavorites(favData.favorites || []));
     }
+
+    return true;
   } catch (error) {
     console.error("Erro no login com Google:", error);
+    return false;
   } finally {
     dispatch(setLoading(false));
   }

@@ -1,16 +1,16 @@
 'use client'
 
-import { useAppDispatch } from "@/redux/hooks"
-import { loginWithCredentials, loginWithGoogle } from "@/redux/features/authActions"
-import { FormEvent, useState } from "react"
+import { useState, FormEvent } from "react"
+import { useRouter } from "next/navigation"
 import { useSelector } from "react-redux"
-import { RootState } from "@/redux/store"
+import { useAppDispatch } from "@/redux/hooks"
+import { AppDispatch, RootState } from "@/redux/store"
+import { loginWithCredentials, loginWithGoogle } from "@/redux/features/authActions"
 import { getTranslations } from "@/locales"
-import { ThunkDispatch } from "@reduxjs/toolkit"
 
 export default function LoginPage() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useAppDispatch() as ThunkDispatch<any, any, any>
+  const dispatch: AppDispatch = useAppDispatch()
+  const router = useRouter()
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage)
   const { loginPage: t } = getTranslations(currentLanguage)
 
@@ -23,11 +23,34 @@ export default function LoginPage() {
     e.preventDefault()
     setError(null)
     setLoading(true)
+
     try {
-      await dispatch(loginWithCredentials(username, password))
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : t.loginError
-      setError(errorMessage)
+      const result = await dispatch(loginWithCredentials(username, password))
+      if (result.success) {
+        router.push("/home")
+      } else {
+        setError(result.message ?? t.loginError)
+      }
+    } catch {
+      setError(t.loginError)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    setError(null)
+    setLoading(true)
+
+    try {
+      const success = await dispatch(loginWithGoogle())
+      if (success) {
+        router.push("/home")
+      } else {
+        setError(t.loginError)
+      }
+    } catch {
+      setError(t.loginError)
     } finally {
       setLoading(false)
     }
@@ -50,8 +73,7 @@ export default function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300
-                         text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
+              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300 text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
               disabled={loading}
             />
           </div>
@@ -66,8 +88,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300
-                         text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
+              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm border-gray-300 text-black placeholder:text-gray-700 focus:ring-[#4A4B83] focus:border-[#4A4B83]"
               disabled={loading}
             />
           </div>
@@ -86,7 +107,7 @@ export default function LoginPage() {
         <div className="mt-6 text-center space-y-2">
           <p className="text-sm text-gray-600">{t.orLoginWith}</p>
           <button
-            onClick={() => dispatch(loginWithGoogle())}
+            onClick={handleGoogleLogin}
             className="w-full border border-gray-300 py-2 px-4 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
             disabled={loading}
           >
