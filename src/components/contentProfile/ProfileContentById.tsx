@@ -5,7 +5,7 @@ import { GamePayloadReturn, UserFullPayload } from '@/types/interfaces/interface
 import { useGetFavoritosUsuarioQuery } from '../header/userApi';
 
 export default function ProfileContent({ user }: { user: UserFullPayload }) {
-  const { data: jogosAvaliados, isLoading: loadingFavoritos, error: errorFavoritos } = useGetFavoritosUsuarioQuery({id: user.idUsuario});
+  const { data: jogosAvaliados, isLoading: loadingFavoritos } = useGetFavoritosUsuarioQuery({id: user.idUsuario});
 
   return (
     <section className="min-h-screen bg-white px-4 py-10 max-w-6xl mx-auto text-gray-800">
