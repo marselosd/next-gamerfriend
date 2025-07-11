@@ -27,6 +27,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
+            {/* Botão mobile para abrir o menu */}
             <div className="flex-shrink-0 flex items-center md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -42,6 +43,7 @@ export default function Header() {
               </button>
             </div>
 
+            {/* Título e links */}
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="text-xl font-bold">
                 {navbar.title}
@@ -49,15 +51,20 @@ export default function Header() {
             </div>
 
             <Navbar />
+
+            {/* Link para Ranking visível apenas em telas maiores */}
+            <Link
+              href="/ranking"
+              className="hidden md:inline-block ml-6 px-3 py-2 rounded-md text-sm font-medium hover:bg-[#4A4B83] transition-colors"
+            >
+              {navbar.ranking || 'Ranking'}
+            </Link>
           </div>
 
+          {/* Área do usuário e idioma */}
           <div className="flex items-center">
             <div className="hidden md:flex items-center mr-4">
-              <button
-                className="p-1 rounded-full hover:bg-[#4A4B83]"
-                aria-label={navbar.search}
-              >
-              </button>
+              <button className="p-1 rounded-full hover:bg-[#4A4B83]" aria-label={navbar.search} />
             </div>
 
             <div className="hidden md:flex items-center mr-4">
@@ -102,11 +109,18 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Menu Mobile */}
       {isMenuOpen && (
         <div className="md:hidden bg-[#6667AB] px-4 pb-4">
           <Navbar isMobile />
 
           <div className="flex flex-col space-y-2 mt-4">
+            <Link
+              href="/ranking"
+              className="px-3 py-1 rounded-md text-sm font-medium hover:bg-[#4A4B83]"
+            >
+              {navbar.ranking || 'Ranking'}
+            </Link>
             <Link
               href="/login"
               className="px-3 py-1 rounded-md text-sm font-medium hover:bg-[#4A4B83]"

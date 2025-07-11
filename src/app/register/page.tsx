@@ -39,8 +39,7 @@ export default function RegisterPage() {
         body: JSON.stringify({
           login: username,
           senha: password,
-          email,
-          nomeCargo: "ROLE_USUARIO"
+          email
         })
       })
 
