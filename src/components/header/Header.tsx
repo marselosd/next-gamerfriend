@@ -9,6 +9,7 @@ import { setLanguage } from '@/redux/slices/languageSlice'
 import { getTranslations, availableLanguages, Language } from '@/locales'
 import Link from 'next/link'
 import Navbar from '../navBar/NavBar'
+import SearchBar from "./SearchBar"
 
 export default function Header() {
   const dispatch = useDispatch()
@@ -58,6 +59,10 @@ export default function Header() {
                 aria-label={navbar.search}
               >
               </button>
+            </div>
+
+            <div className="mt-4">
+              <SearchBar/>
             </div>
 
             <div className="hidden md:flex items-center mr-4">
@@ -119,6 +124,10 @@ export default function Header() {
             >
               {navbar.createAccount}
             </Link>
+          </div>
+
+          <div className="mt-4">
+            <SearchBar/>
           </div>
 
           <div className="mt-4">
