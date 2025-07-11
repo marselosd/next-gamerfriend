@@ -59,3 +59,13 @@ export interface FavoritePayload {
   idJogo: number;
   favorito: boolean;
 }
+
+export interface UserSearchBarPayload {
+  idUsuario: number;
+  login: string;
+}
+
+export interface UserFullPayload extends UserSearchBarPayload {
+  email: string;
+  roles: string[];
+}
