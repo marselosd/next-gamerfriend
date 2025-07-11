@@ -39,22 +39,20 @@ export default function LoginPage() {
   }
 
   const handleGoogleLogin = async () => {
-    setError(null)
-    setLoading(true)
-
+    setLoading(true);
+  
     try {
-      const success = await dispatch(loginWithGoogle())
+      const success = await dispatch(loginWithGoogle());
+  
       if (success) {
-        router.push("/home")
-      } else {
-        setError(t.loginError)
+        router.push("/home");
       }
-    } catch {
-      setError(t.loginError)
+    } catch (err) {
+      console.error("Erro silencioso no login com Google:", err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-white px-4">
